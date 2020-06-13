@@ -16,12 +16,12 @@ const FashionItem = (props) => {
       <View style={styles.actions}>
         <Button
           color={Colors.primary}
-          title='View Details'
+          title='Get now'
           onPress={props.onViewDetail}
         />
         <Button
           color={Colors.primary}
-          title='To Cart'
+          title='Join'
           onPress={props.onAddToCart}
         />
       </View>

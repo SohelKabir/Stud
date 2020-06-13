@@ -4,9 +4,9 @@ import { useSelector } from 'react-redux';
 
 import FashionItem from '../components/Stud/FashionItem';
 
-const FashionScreen = () => {
+const FashionScreen = (props) => {
   const fashion = useSelector((state) => state.fashion.fashion);
-  console.log(fashion);
+  //console.log(fashion);
 
   return (
     <View>
@@ -18,6 +18,12 @@ const FashionScreen = () => {
             image={itemData.item.imageUrl}
             price={itemData.item.price}
             title={itemData.item.title}
+            onViewDetail={() =>
+              props.navigation.navigate('FashionDetail', {
+                fashionId: itemData.item.id,
+                fashionTitle: itemData.item.title,
+              })
+            }
           />
         )}
       />
