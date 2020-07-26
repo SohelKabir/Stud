@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { memo } from 'react';
 import {
   View,
@@ -10,15 +9,10 @@ import {
   TouchableNativeFeedback,
   Platform,
 } from 'react-native';
-=======
-import React from 'react';
-import { View, Text, Image, StyleSheet, Button } from 'react-native';
->>>>>>> 64898417c224a33d76a3d47bd299032adbaa14f2
 
 import Colors from '../../constants/colors';
 
 const FashionItem = (props) => {
-<<<<<<< HEAD
   let TouchableCmp = TouchableOpacity;
   if (Platform.OS === 'android' && Platform.Version >= 21) {
     TouchableCmp = TouchableNativeFeedback;
@@ -49,28 +43,6 @@ const FashionItem = (props) => {
             </View>
           </View>
         </TouchableCmp>
-=======
-  return (
-    <View style={styles.product}>
-      <View style={styles.imageContainer}>
-        <Image style={styles.image} source={{ uri: props.image }} />
-      </View>
-      <View style={styles.details}>
-        <Text style={styles.title}>{props.title}</Text>
-        <Text style={styles.price}>${props.price.toFixed(2)}</Text>
-      </View>
-      <View style={styles.actions}>
-        <Button
-          color={Colors.primary}
-          title='Get now'
-          onPress={props.onViewDetail}
-        />
-        <Button
-          color={Colors.primary}
-          title='Join'
-          onPress={props.onAddToCart}
-        />
->>>>>>> 64898417c224a33d76a3d47bd299032adbaa14f2
       </View>
     </View>
   );
@@ -86,15 +58,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: 'white',
     height: 300,
-<<<<<<< HEAD
     margin: 15,
   },
   touchable: {
     borderRadius: 10,
     overflow: 'hidden',
-=======
-    margin: 20,
->>>>>>> 64898417c224a33d76a3d47bd299032adbaa14f2
   },
   imageContainer: {
     width: '100%',
@@ -113,14 +81,9 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   title: {
-<<<<<<< HEAD
     fontFamily: 'open-sans-bold',
     fontSize: 18,
     marginVertical: 2,
-=======
-    fontSize: 18,
-    marginVertical: 4,
->>>>>>> 64898417c224a33d76a3d47bd299032adbaa14f2
   },
   price: {
     fontSize: 14,
@@ -135,8 +98,4 @@ const styles = StyleSheet.create({
   },
 });
 
-<<<<<<< HEAD
 export default memo(FashionItem);
-=======
-export default FashionItem;
->>>>>>> 64898417c224a33d76a3d47bd299032adbaa14f2
