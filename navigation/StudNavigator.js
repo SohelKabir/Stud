@@ -5,7 +5,7 @@ import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import { Ionicons } from '@expo/vector-icons';
-import { Platform, Text } from 'react-native';
+import { Platform, Text, Image } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 
 import HeaderButton from '../components/UI/HeaderButton';
@@ -19,6 +19,8 @@ import TechnologyScreen from '../screens/TechnologyScreen';
 import SettingScreen from '../screens/SettingScreen';
 import AboutScreen from '../screens/AboutScreen';
 import SupportScreen from '../screens/SupportScreen';
+import AllScreen from '../screens/AllScreen';
+import CompaniesAndShopsScreen from '../screens/CompaniesAndShopsScreen';
 
 const headerNavButton = (navData) => (
   <HeaderButtons HeaderButtonComponent={HeaderButton}>
@@ -34,6 +36,7 @@ const headerNavButton = (navData) => (
 
 const TabNavigator = createMaterialTopTabNavigator(
   {
+    All: AllScreen,
     Fashion: FashionScreen,
     Blog: BlogScreen,
     Health_Fitnes: {
@@ -51,11 +54,20 @@ const TabNavigator = createMaterialTopTabNavigator(
       }),
     },
     Technology: TechnologyScreen,
+    CompaniesAndShops: {
+      screen: CompaniesAndShopsScreen,
+      navigationOptions: () => {
+        return {
+          tabBarLabel: 'Companies & Shops',
+        };
+      },
+    },
   },
   {
     tabBarOptions: {
       activeTintColor: colors.primary,
       inactiveTintColor: colors.primary,
+      upperCaseLabel: false,
       labelStyle: {
         fontSize: 12,
         fontFamily: 'open-sans-bold',
@@ -79,7 +91,15 @@ const StudNavigator = createStackNavigator(
     Tab: {
       screen: TabNavigator,
       navigationOptions: (navData) => ({
-        headerTitle: 'Stud',
+        headerTitle: (
+          props // App Logo
+        ) => (
+          <Image
+            style={{ width: 100, height: 50 }}
+            source={require('../assets/studlogo.png')}
+            resizeMode='contain'
+          />
+        ),
         headerLeft: () => headerNavButton(navData),
       }),
     },

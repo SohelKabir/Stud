@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
+import ReduxThunk from 'redux-thunk';
 
 import FashionReducer from './store/reducers/fashion';
+import BlogsReducer from './store/reducers/blog';
 import StudNavigator from './navigation/StudNavigator';
 
 const rootReducer = combineReducers({
   fashion: FashionReducer,
+  blogs: BlogsReducer,
 });
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 
 const fetchFont = () => {
   return Font.loadAsync({

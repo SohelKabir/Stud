@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import {
   View,
   Text,
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: 'white',
     height: 300,
-    margin: 20,
+    margin: 15,
   },
   touchable: {
     borderRadius: 10,
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: 'open-sans-bold',
     fontSize: 18,
-    marginVertical: 4,
+    marginVertical: 2,
   },
   price: {
     fontSize: 14,
@@ -98,4 +98,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FashionItem;
+export default memo(FashionItem);

@@ -9,9 +9,9 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/studlogosq.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/studlogo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -24,6 +24,10 @@
     "ios": {
       "supportsTablet": true
     },
-    "description": ""
+    "description": "",
+    "android": {
+      "package": "com.stud.stud",
+      "versionCode": 1
+    }
   }
 }
