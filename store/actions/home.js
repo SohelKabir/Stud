@@ -1,9 +1,7 @@
-export const setFashion = () => {
+export const setHome = () => {
   return async (dispatch) => {
     try {
-      const response = await fetch(
-        'http://studbd.com/api/category_offers/fashion'
-      );
+      const response = await fetch('http://studbd.com/api/home_offers');
       // console.log(response);
 
       const resData = await response.json();
@@ -11,8 +9,8 @@ export const setFashion = () => {
       // console.log('from action ' + resData.map((a) => a.review_title));
 
       dispatch({
-        type: 'SET_FASHION',
-        fashion: resData,
+        type: 'SET_HOME',
+        home: resData,
       });
     } catch (error) {
       throw error;

@@ -1,6 +1,7 @@
 import React, { useEffect, useState, memo } from 'react';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 import { SliderBox } from 'react-native-image-slider-box';
+//import Carousel from 'react-native-snap-carousel';
 
 const SlideShow = (props) => {
   return (

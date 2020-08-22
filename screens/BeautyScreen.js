@@ -14,11 +14,11 @@ import {
 import SlideShow from '../components/Stud/SlideShow';
 
 import BigCard from '../components/Stud/BigCard';
-import { setHealth } from '../store/actions/health';
+import { setBeauty } from '../store/actions/beauty';
 import Colors from '../constants/colors';
 
-const HealthScreen = (props) => {
-  // const Health = useSelector((state) => state.Health.Health);
+const BeautyScreen = (props) => {
+  // const fashion = useSelector((state) => state.fashion.fashion);
 
   const dispatch = useDispatch();
 
@@ -26,16 +26,17 @@ const HealthScreen = (props) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [error, setError] = useState('');
 
-  const [healthSliders, setHealthSliders] = useState([]);
+  const [beautySliders, setBeautySliders] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const healthSlidersImages = [];
+  const beautySlidersImages = [];
 
-  const loadHealth = useCallback(async () => {
+  const loadBeauty = useCallback(async () => {
     setError(null);
     setIsRefreshing(true);
     try {
-      await dispatch(setHealth());
+      await dispatch(setBeauty());
+      // console.log("from beauty");
     } catch (error) {
       setError(error);
     }
@@ -44,30 +45,33 @@ const HealthScreen = (props) => {
   }, [dispatch, setIsLoading, setError]);
   ////
 
-  //dispatch(setHealth(newData));
+  //dispatch(setBeauty(newData));
   useEffect(() => {
     setIsLoading(true);
-    loadHealth();
+    loadBeauty();
     setIsLoading(false);
-  }, [dispatch, loadHealth]);
+  }, [dispatch, loadBeauty]);
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
-        'http://studbd.com/api/category_sliders/Health'
+        //sliders
+        'http://studbd.com/api/category_sliders/Fashion'
       );
       const resData = await response.json();
 
-      setHealthSliders(resData);
+      setBeautySliders(resData);
     };
 
     fetchData();
   }, []);
 
-  const health = useSelector((state) => state.health);
+  const beauty = useSelector((state) => state.beauty);
+  //console.log(useSelector((state) => state));
+  // console.log('data ' + beauty);
 
-  healthSliders.forEach((healthSlide) => {
-    healthSlidersImages.push(healthSlide.slider_image_url);
+  beautySliders.forEach((beautySlide) => {
+    beautySlidersImages.push(beautySlide.slider_image_url);
   });
   // let handleModal = () => {
   //   setIsModalVisible(true);
@@ -77,7 +81,7 @@ const HealthScreen = (props) => {
     return (
       <View style={styles.centered}>
         <Text>An error occurred!</Text>
-        <Button title='Try again' onPress={loadHealth} color={Colors.primary} />
+        <Button title='Try again' onPress={loadBeauty} color={Colors.primary} />
       </View>
     );
   }
@@ -90,14 +94,11 @@ const HealthScreen = (props) => {
     );
   }
 
-  if (!isLoading && health.length === 0) {
+  if (!isLoading && beauty.length === 0) {
     return (
-      <>
-        <SlideShow images={healthSlidersImages} sliderBoxHeight={200} />
-        <View style={styles.centered}>
-          <Text>Data unavailable!</Text>
-        </View>
-      </>
+      <View style={styles.centered}>
+        <Text>No data availabe!</Text>
+      </View>
     );
   }
 
@@ -105,10 +106,10 @@ const HealthScreen = (props) => {
     <>
       <FlatList
         ListHeaderComponent={
-          <SlideShow images={healthSlidersImages} sliderBoxHeight={200} />
+          <SlideShow images={beautySlidersImages} sliderBoxHeight={200} />
         }
-        data={health}
-        onRefresh={loadHealth}
+        data={beauty}
+        onRefresh={loadBeauty}
         refreshing={isRefreshing}
         keyExtractor={(item, index) => index.toString()}
         renderItem={(itemData) => (
@@ -129,7 +130,7 @@ const HealthScreen = (props) => {
   );
 };
 
-export default memo(HealthScreen);
+export default memo(BeautyScreen);
 
 const styles = StyleSheet.create({
   centered: { flex: 1, justifyContent: 'center', alignItems: 'center' },

@@ -11,6 +11,7 @@ import {
   Platform,
 } from 'react-native';
 import { SliderBox } from 'react-native-image-slider-box';
+import PromoCodeModal from '../../screens/PromoCodeScreen';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -18,30 +19,54 @@ const cardWidth = windowWidth / 2.12;
 const cardHeight = cardWidth;
 
 const OfferCard = (props) => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [itemId, setItemId] = useState('');
+
   let TouchableCmp = TouchableOpacity;
   if (Platform.OS === 'android' && Platform.Version >= 21) {
     TouchableCmp = TouchableNativeFeedback;
   }
+
+  let handleModal = (status, id) => {
+    setItemId(id);
+    setIsModalVisible(true);
+    setIsModalVisible(status);
+  };
   return (
-    <View style={styles.card}>
-      <View style={styles.touchable}>
-        <TouchableCmp useForeground>
-          <View>
-            <Text style={styles.OfferText}>Offer</Text>
-            <View style={styles.logo}>
-              <Image
-                style={styles.image}
-                source={{
-                  uri:
-                    'https://lh6.googleusercontent.com/proxy/9wvYYedv_o4P7V_PX_StNOz457A38f69OsTi6OhwK5EhewnD2PVw4KYyXh6BfxssA_asNAVq4jG4ZlmOsdKQPQmF_6LKsfzflJohxIxYuLj2R50e8C1hegDErahnUMh8',
-                }}
-              />
-            </View>
-            <Text style={styles.discountText}>50% Student Discount!!</Text>
-          </View>
-        </TouchableCmp>
+    <>
+      <View>
+        <PromoCodeModal
+          isModalVisible={isModalVisible}
+          handleModal={handleModal}
+          //itemId={itemId}
+          image={props.image}
+          brandName={props.brandName}
+          title={props.title}
+          offer_details={props.offer_details}
+        />
       </View>
-    </View>
+      <View style={styles.card}>
+        <View style={styles.touchable}>
+          <TouchableCmp
+            useForeground
+            onPress={() => handleModal(true, props.title)}
+          >
+            <View>
+              <Text style={styles.OfferText}>Offer</Text>
+              <View style={styles.logo}>
+                <Image
+                  style={styles.image}
+                  source={{
+                    uri: props.image,
+                  }}
+                />
+              </View>
+              <Text style={styles.discountText}>{props.title}</Text>
+            </View>
+          </TouchableCmp>
+        </View>
+      </View>
+    </>
   );
 };
 

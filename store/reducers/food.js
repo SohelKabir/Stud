@@ -4,10 +4,8 @@ export default (state = initialState, action) => {
   //console.log(action);
 
   switch (action.type) {
-    case 'SET_FASHION':
-      // console.log('from reducer: ' + action.blogs);
-
-      return action.fashion;
+    case 'SET_FOOD':
+      return action.food;
 
     default:
       return state;

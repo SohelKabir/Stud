@@ -1,8 +1,8 @@
-export const setFashion = () => {
+export const setBeauty = () => {
   return async (dispatch) => {
     try {
       const response = await fetch(
-        'http://studbd.com/api/category_offers/fashion'
+        'http://studbd.com/api/category_offers/beauty'
       );
       // console.log(response);
 
@@ -11,8 +11,8 @@ export const setFashion = () => {
       // console.log('from action ' + resData.map((a) => a.review_title));
 
       dispatch({
-        type: 'SET_FASHION',
-        fashion: resData,
+        type: 'SET_BEAUTY',
+        beauty: resData,
       });
     } catch (error) {
       throw error;

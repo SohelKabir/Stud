@@ -76,7 +76,7 @@ const BlogScreen = (props) => {
         data={blogs}
         onRefresh={loadBlogs}
         refreshing={isRefreshing}
-        keyExtractor={(item) => item.review_id}
+        keyExtractor={(item, index) => index.toString()}
         renderItem={(itemData) => (
           <BlogItem
             image={itemData.item.review_image_url}

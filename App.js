@@ -9,10 +9,18 @@ import ReduxThunk from 'redux-thunk';
 import FashionReducer from './store/reducers/fashion';
 import BlogsReducer from './store/reducers/blog';
 import StudNavigator from './navigation/StudNavigator';
+import BeautyReducer from './store/reducers/beauty';
+import FoodReducer from './store/reducers/food';
+import HealthReducer from './store/reducers/health';
+import HomeReducer from './store/reducers/home';
 
 const rootReducer = combineReducers({
   fashion: FashionReducer,
   blogs: BlogsReducer,
+  beauty: BeautyReducer,
+  food: FoodReducer,
+  health: HealthReducer,
+  home: HomeReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));

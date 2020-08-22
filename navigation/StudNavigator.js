@@ -15,12 +15,13 @@ import FashionDetailScreen from '../screens/FashionDetailScreen';
 import BlogScreen from '../screens/BlogScreen';
 import HealthAndFitnessScreen from '../screens/HealthAndFitnessScreen';
 import FoodAndDrinkScreen from '../screens/FoodAndDrinkScreen';
-import TechnologyScreen from '../screens/TechnologyScreen';
+import BeautyScreen from '../screens/BeautyScreen';
 import SettingScreen from '../screens/SettingScreen';
 import AboutScreen from '../screens/AboutScreen';
 import SupportScreen from '../screens/SupportScreen';
 import AllScreen from '../screens/AllScreen';
 import CompaniesAndShopsScreen from '../screens/CompaniesAndShopsScreen';
+import PromoCodeScreen from '../screens/PromoCodeScreen';
 
 const headerNavButton = (navData) => (
   <HeaderButtons HeaderButtonComponent={HeaderButton}>
@@ -38,7 +39,7 @@ const TabNavigator = createMaterialTopTabNavigator(
   {
     All: AllScreen,
     Fashion: FashionScreen,
-    Blog: BlogScreen,
+
     Health_Fitnes: {
       screen: HealthAndFitnessScreen,
       navigationOptions: () => {
@@ -53,15 +54,16 @@ const TabNavigator = createMaterialTopTabNavigator(
         tabBarLabel: 'Food & Drink',
       }),
     },
-    Technology: TechnologyScreen,
-    CompaniesAndShops: {
-      screen: CompaniesAndShopsScreen,
-      navigationOptions: () => {
-        return {
-          tabBarLabel: 'Companies & Shops',
-        };
-      },
-    },
+    Beauty: BeautyScreen,
+    Blog: BlogScreen,
+    // CompaniesAndShops: {
+    //   screen: CompaniesAndShopsScreen,
+    //   navigationOptions: () => {
+    //     return {
+    //       tabBarLabel: 'Companies & Shops',
+    //     };
+    //   },
+    // },
   },
   {
     tabBarOptions: {
@@ -107,6 +109,12 @@ const StudNavigator = createStackNavigator(
       screen: FashionDetailScreen,
       navigationOptions: ({ navigation }) => {
         return { headerTitle: navigation.getParam('fashionTitle') };
+      },
+    },
+    PromoCode: {
+      screen: PromoCodeScreen,
+      navigationOptions: ({ navigation }) => {
+        return { headerTitle: 'Promo Code' };
       },
     },
   },
