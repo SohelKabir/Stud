@@ -1,5 +1,8 @@
 export const setBlogs = () => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    // getting token from store
+    // const token = getState().auth.token;
+    //console.log(' from token: ' + token);
     try {
       const response = await fetch('http://studbd.com/api/blogs');
       // console.log(response);

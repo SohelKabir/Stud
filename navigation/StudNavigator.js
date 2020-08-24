@@ -1,12 +1,20 @@
 import React from 'react';
-import { createAppContainer } from 'react-navigation';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import { createDrawerNavigator } from 'react-navigation-drawer';
+import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer';
 import { Ionicons } from '@expo/vector-icons';
-import { Platform, Text, Image } from 'react-native';
+import {
+  Platform,
+  Text,
+  Image,
+  SafeAreaView,
+  Button,
+  View,
+} from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
+import { useDispatch } from 'react-redux';
 
 import HeaderButton from '../components/UI/HeaderButton';
 import FashionScreen from '../screens/FashionScreen';
@@ -22,6 +30,9 @@ import SupportScreen from '../screens/SupportScreen';
 import AllScreen from '../screens/AllScreen';
 import CompaniesAndShopsScreen from '../screens/CompaniesAndShopsScreen';
 import PromoCodeScreen from '../screens/PromoCodeScreen';
+import AuthScreen from '../screens/user/AuthScreen';
+import StartupScreen from '../screens/StartupScreen';
+import * as authActions from '../store/actions/auth';
 
 const headerNavButton = (navData) => (
   <HeaderButtons HeaderButtonComponent={HeaderButton}>
@@ -215,16 +226,51 @@ const aboutStackNavigatior = createStackNavigator(
   }
 );
 
-const drawerNavigator = createDrawerNavigator({
-  Home: StudNavigator,
-  Setting: {
-    screen: settingStackNavigatior,
+const drawerNavigator = createDrawerNavigator(
+  {
+    Home: StudNavigator,
+    Setting: {
+      screen: settingStackNavigatior,
+    },
+    Support: supportStackNavigatior,
+    About: aboutStackNavigatior,
   },
-  Support: supportStackNavigatior,
-  About: aboutStackNavigatior,
-});
+  {
+    contentComponent: (props) => {
+      const dispatch = useDispatch();
+      return (
+        <View style={{ flex: 1, paddingTop: 20 }}>
+          <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }}>
+            <DrawerItems {...props} />
+            <Button
+              title='Logout'
+              color={colors.primary}
+              onPress={() => {
+                dispatch(authActions.logout());
+                //  props.navigation.navigate('Auth');
+              }}
+            />
+          </SafeAreaView>
+        </View>
+      );
+    },
+  }
+);
 
-export default createAppContainer(drawerNavigator);
+const Auth = createStackNavigator({ Auth: AuthScreen });
+
+const MainNavigator = createSwitchNavigator(
+  {
+    Startup: StartupScreen,
+    Auth: Auth,
+    App: drawerNavigator,
+  },
+  {
+    initialRouteName: 'Startup',
+  }
+);
+
+export default createAppContainer(MainNavigator);
 
 // Support: SupportScreen,
 //   About: AboutScreen,

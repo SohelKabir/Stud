@@ -8,11 +8,12 @@ import ReduxThunk from 'redux-thunk';
 
 import FashionReducer from './store/reducers/fashion';
 import BlogsReducer from './store/reducers/blog';
-import StudNavigator from './navigation/StudNavigator';
+import NavigationContainer from './navigation/NavigationContainer';
 import BeautyReducer from './store/reducers/beauty';
 import FoodReducer from './store/reducers/food';
 import HealthReducer from './store/reducers/health';
 import HomeReducer from './store/reducers/home';
+import AuthReducer from './store/reducers/auth';
 
 const rootReducer = combineReducers({
   fashion: FashionReducer,
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   food: FoodReducer,
   health: HealthReducer,
   home: HomeReducer,
+  auth: AuthReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
@@ -48,7 +50,7 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <StudNavigator />
+      <NavigationContainer />
     </Provider>
   );
 }
