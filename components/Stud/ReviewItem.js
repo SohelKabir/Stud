@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { SliderBox } from 'react-native-image-slider-box';
 import PromoCodeModal from '../../screens/PromoCodeScreen';
+import { Rating, AirbnbRating } from 'react-native-ratings';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -52,10 +53,6 @@ const OfferCard = (props) => {
             onPress={() => handleModal(true, props.title)}
           >
             <View style={styles.itemContainer}>
-              <View>
-                <Text style={styles.OfferText}>Offer</Text>
-              </View>
-
               <View style={styles.logo}>
                 <Image
                   style={styles.image}
@@ -64,9 +61,21 @@ const OfferCard = (props) => {
                   }}
                 />
               </View>
-
               <View>
-                <Text style={styles.discountText}>{props.title}</Text>
+                <Text style={styles.brandName}>{props.brand}</Text>
+              </View>
+
+              <View style={styles.ratingContainer}>
+                <AirbnbRating
+                  showRating={false}
+                  ratingCount={5}
+                  defaultRating={props.rating}
+                  //  onFinishRating={ratingCompleted}
+                  size={20}
+                  reviews={['Terrible', 'Bad', 'Okay', 'Good', 'Great']}
+                  starContainerStyle={styles.rating}
+                  isDisabled={true}
+                />
               </View>
             </View>
           </TouchableCmp>
@@ -98,8 +107,12 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   itemContainer: {
+    height: cardHeight,
     display: 'flex',
     // backgroundColor: 'blue',
+    justifyContent: 'space-evenly',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   OfferText: {
     // backgroundColor: 'yellow',
@@ -110,16 +123,18 @@ const styles = StyleSheet.create({
   },
   logo: {
     justifyContent: 'center',
+    // borderRadius: 50,
     // backgroundColor: 'cyan',
-    height: 70,
-    width: 150,
+    height: 80,
+    width: 120,
     alignItems: 'center',
-    marginLeft: 20,
+    //marginLeft: 20,
   },
   image: {
-    marginTop: 20,
-    width: '80%',
-    height: '80%',
+    // marginTop: 20,
+    width: '100%',
+    height: '100%',
+    // borderRadius: 50,
   },
   discountText: {
     color: 'brown',
@@ -127,5 +142,16 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginTop: 20,
     marginLeft: 10,
+  },
+  ratingContainer: {
+    alignItems: 'flex-start',
+  },
+  brandName: {
+    fontFamily: 'open-sans',
+    fontSize: 14,
+    marginVertical: 2,
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    color: '#888',
   },
 });

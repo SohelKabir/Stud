@@ -15,6 +15,7 @@ const StartupScreen = (props) => {
 
   useEffect(() => {
     const tryLogin = async () => {
+      console.log('from startup ');
       const userData = await AsyncStorage.getItem('userData');
       if (!userData) {
         props.navigation.navigate('Auth');

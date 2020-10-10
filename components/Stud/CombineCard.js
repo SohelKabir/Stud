@@ -14,7 +14,7 @@ const CombineCard = ({ itemData }) => {
 
   return (
     <>
-      {itemData.index % 3 === 0 ? (
+      {itemData.index % 3 === 0 ? ( //itemData.index % 3 === 0 for two small card
         <View style={styles.BigCardContainer}>
           <BigCard
             image={itemData.item.offer_image_url}
@@ -24,12 +24,14 @@ const CombineCard = ({ itemData }) => {
           />
         </View>
       ) : (
-        <OfferCard
-          image={itemData.item.offer_image_url}
-          brandName={itemData.item.offer_brand}
-          title={itemData.item.offer_name}
-          offer_details={itemData.item.offer_details}
-        />
+        <View style={styles.offerCardContainer}>
+          <OfferCard
+            image={itemData.item.offer_image_url}
+            brandName={itemData.item.offer_brand}
+            title={itemData.item.offer_name}
+            offer_details={itemData.item.offer_details}
+          />
+        </View>
       )}
     </>
   );
@@ -40,5 +42,8 @@ export default CombineCard;
 const styles = StyleSheet.create({
   BigCardContainer: {
     width: Dimensions.get('window').width,
+  },
+  offerCardContainer: {
+    //  width: Dimensions.get('window').width / 2 - 10,
   },
 });

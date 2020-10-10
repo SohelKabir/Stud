@@ -117,7 +117,11 @@ const FoodScreen = (props) => {
           ListHeaderComponent={
             <SlideShow images={foodSlidersImages} sliderBoxHeight={200} />
           }
-          columnWrapperStyle={{ flexWrap: 'wrap', flex: 1 }}
+          columnWrapperStyle={{
+            flexWrap: 'wrap',
+            flex: 1,
+            justifyContent: 'center',
+          }}
           numColumns={3}
           data={food}
           onRefresh={loadFood}

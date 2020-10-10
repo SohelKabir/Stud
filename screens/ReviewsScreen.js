@@ -10,13 +10,11 @@ import {
   Button,
 } from 'react-native';
 
-import axios from 'axios';
-
-import BlogItem from '../components/Stud/BlogItem';
+import ReviewItem from '../components/Stud/ReviewItem';
 import { setBlogs } from '../store/actions/blogs';
 import Colors from '../constants/colors';
 
-const BlogScreen = (props) => {
+const ReviewsScreen = (props) => {
   const dispatch = useDispatch();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -76,9 +74,15 @@ const BlogScreen = (props) => {
         data={blogs}
         onRefresh={loadBlogs}
         refreshing={isRefreshing}
+        columnWrapperStyle={{
+          flexWrap: 'wrap',
+          flex: 1,
+          justifyContent: 'center',
+        }}
+        numColumns={2}
         keyExtractor={(item, index) => index.toString()}
         renderItem={(itemData) => (
-          <BlogItem
+          <ReviewItem
             image={itemData.item.review_image_url}
             // price={itemData.item.price}
             title={itemData.item.review_title}
@@ -103,4 +107,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BlogScreen;
+export default ReviewsScreen;

@@ -103,28 +103,30 @@ const HealthScreen = (props) => {
 
   return (
     <>
-      <FlatList
-        ListHeaderComponent={
-          <SlideShow images={healthSlidersImages} sliderBoxHeight={200} />
-        }
-        data={health}
-        onRefresh={loadHealth}
-        refreshing={isRefreshing}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={(itemData) => (
-          <>
-            <BigCard
-              image={itemData.item.offer_image_url}
-              brandName={itemData.item.offer_brand}
-              title={itemData.item.offer_name}
-              offer_details={itemData.item.offer_details}
-            />
-          </>
-        )}
-        // ListFooterComponent={
-        //   //Footer Component // components below flat list will go here inside <> other compontes </>
-        // }
-      />
+      <View style={styles.FlatListContainer}>
+        <FlatList
+          ListHeaderComponent={
+            <SlideShow images={healthSlidersImages} sliderBoxHeight={200} />
+          }
+          data={health}
+          onRefresh={loadHealth}
+          refreshing={isRefreshing}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={(itemData) => (
+            <>
+              <BigCard
+                image={itemData.item.offer_image_url}
+                brandName={itemData.item.offer_brand}
+                title={itemData.item.offer_name}
+                offer_details={itemData.item.offer_details}
+              />
+            </>
+          )}
+          // ListFooterComponent={
+          //   //Footer Component // components below flat list will go here inside <> other compontes </>
+          // }
+        />
+      </View>
     </>
   );
 };
@@ -133,4 +135,7 @@ export default memo(HealthScreen);
 
 const styles = StyleSheet.create({
   centered: { flex: 1, justifyContent: 'center', alignItems: 'center' },
+  FlatListContainer: {
+    backgroundColor: '#fff',
+  },
 });

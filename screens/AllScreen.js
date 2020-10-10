@@ -10,6 +10,7 @@ import {
   ActivityIndicator,
   Button,
   Dimensions,
+  AsyncStorage,
 } from 'react-native';
 
 import SlideShow from '../components/Stud/SlideShow';
@@ -22,6 +23,24 @@ import CombineCard from '../components/Stud/CombineCard';
 
 const AllScreen = (props) => {
   const dispatch = useDispatch();
+
+  const token = useSelector((state) => !!state.auth.token);
+
+  // useEffect(() => {
+  //   const checkLogin = async () => {
+  //     const userData = await AsyncStorage.getItem('userData');
+
+  //     console.log('====================================');
+  //     console.log(userData);
+  //     console.log('====================================');
+  //     //userData = userData;
+  //     if (!token && userData) {
+  //       props.navigation.navigate('Startup');
+  //     }
+  //   };
+
+  //   checkLogin();
+  // }, []);
 
   const [isLoading, setIsLoading] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -110,7 +129,11 @@ const AllScreen = (props) => {
           ListHeaderComponent={
             <SlideShow images={homeSlidersImages} sliderBoxHeight={200} />
           }
-          columnWrapperStyle={{ flexWrap: 'wrap', flex: 1 }}
+          columnWrapperStyle={{
+            flexWrap: 'wrap',
+            flex: 1,
+            justifyContent: 'center',
+          }}
           numColumns={3}
           data={home}
           onRefresh={loadHome}

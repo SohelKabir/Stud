@@ -1,31 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { createStore, combineReducers, applyMiddleware } from 'redux';
+import React, { useState } from 'react';
 import { Provider } from 'react-redux';
 import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
-import ReduxThunk from 'redux-thunk';
 
-import FashionReducer from './store/reducers/fashion';
-import BlogsReducer from './store/reducers/blog';
 import NavigationContainer from './navigation/NavigationContainer';
-import BeautyReducer from './store/reducers/beauty';
-import FoodReducer from './store/reducers/food';
-import HealthReducer from './store/reducers/health';
-import HomeReducer from './store/reducers/home';
-import AuthReducer from './store/reducers/auth';
+import { store } from './store/configStore';
 
-const rootReducer = combineReducers({
-  fashion: FashionReducer,
-  blogs: BlogsReducer,
-  beauty: BeautyReducer,
-  food: FoodReducer,
-  health: HealthReducer,
-  home: HomeReducer,
-  auth: AuthReducer,
-});
+// const rootReducer = combineReducers({
+//   fashion: FashionReducer,
+//   blogs: BlogsReducer,
+//   beauty: BeautyReducer,
+//   food: FoodReducer,
+//   health: HealthReducer,
+//   home: HomeReducer,
+//   auth: AuthReducer,
+// });
 
-const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
+// const store = createStore(
+//   rootReducer,
+//   composeWithDevTools(applyMiddleware(ReduxThunk))
+// );
 
 const fetchFont = () => {
   return Font.loadAsync({

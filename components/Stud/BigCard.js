@@ -81,8 +81,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: 'white',
     height: 300,
-    margin: 12,
-    marginVertical: 5,
+    marginHorizontal: 10,
+    marginVertical: -5,
+    //backgroundColor: 'green',
   },
   touchable: {
     borderRadius: 10,

@@ -7,7 +7,12 @@ import {
   Button,
   ActivityIndicator,
   Alert,
+  Image,
+  Platform,
+  ToastAndroid,
 } from 'react-native';
+//import Snackbar from 'react-native-snackbar';
+import * as ImagePicker from 'expo-image-picker';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useDispatch } from 'react-redux';
 
@@ -47,13 +52,62 @@ const AuthScreen = (props) => {
   const [isSignup, setIsSignup] = useState(false);
   const dispatch = useDispatch();
 
+  const [imageProfilePic, setImageProfilePic] = useState(null);
+  const [imageSIDPic, setImageSIDPic] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      if (Platform.OS !== 'web') {
+        const {
+          status,
+        } = await ImagePicker.requestCameraRollPermissionsAsync();
+        if (status !== 'granted') {
+          alert('Sorry, we need camera roll permissions to make this work!');
+        }
+      }
+    })();
+  }, []);
+
+  const pickImageProfilePic = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      setImageProfilePic(result.uri);
+    }
+  };
+  const pickImageSIDPic = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      setImageSIDPic(result.uri);
+    }
+  };
+
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: {
+      name: '',
       email: '',
+      phone: '',
       password: '',
     },
     inputValidities: {
+      name: false,
       email: false,
+      phone: false,
       password: false,
     },
     formIsValid: false,
@@ -65,12 +119,19 @@ const AuthScreen = (props) => {
     }
   }, [error]);
 
+  const user_created_at = new Date().toLocaleDateString();
+
   const authHandler = async () => {
     let action;
     if (isSignup) {
       action = authActions.signup(
+        formState.inputValues.name,
         formState.inputValues.email,
-        formState.inputValues.password
+        formState.inputValues.phone,
+        formState.inputValues.password,
+        user_created_at,
+        imageProfilePic,
+        imageSIDPic
       );
     } else {
       action = authActions.login(
@@ -82,7 +143,11 @@ const AuthScreen = (props) => {
     setIsLoading(true);
     try {
       await dispatch(action);
-      props.navigation.navigate('App');
+      if (!isSignup) {
+        props.navigation.navigate('App');
+        setIsLoading(false);
+      }
+      setIsLoading(false);
     } catch (err) {
       setError(err.message);
       setIsLoading(false);
@@ -103,13 +168,37 @@ const AuthScreen = (props) => {
 
   return (
     <KeyboardAvoidingView
-      behavior='padding'
-      keyboardVerticalOffset={50}
-      style={styles.screen}
+      behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+      style={styles.container}
+      //enabled={false}
     >
-      <LinearGradient colors={['#1e1e2f', '#00d4ff']} style={styles.gradient}>
+      <LinearGradient
+        colors={['#f6f8f9', '#e5ebee', '#d7dee3', '#f5f7f9']}
+        style={styles.gradient}
+      >
+        <View style={styles.logoContainer}>
+          <Image
+            style={{ width: 200, height: 100 }}
+            source={require('../../assets/studlogo.png')}
+            resizeMode='contain'
+          />
+        </View>
+
         <Card style={styles.authContainer}>
           <ScrollView>
+            {isSignup ? (
+              <Input
+                id='name'
+                label='Name'
+                keyboardType='default'
+                required
+                name
+                autoCapitalize='none'
+                errorText='Please enter name'
+                onInputChange={inputChangeHandler}
+                initialValue=''
+              />
+            ) : null}
             <Input
               id='email'
               label='E-Mail'
@@ -121,6 +210,19 @@ const AuthScreen = (props) => {
               onInputChange={inputChangeHandler}
               initialValue=''
             />
+            {isSignup ? (
+              <Input
+                id='phone'
+                label='Phone Number'
+                keyboardType='phone-pad'
+                required
+                phone
+                autoCapitalize='none'
+                errorText='Please enter valid phone'
+                onInputChange={inputChangeHandler}
+                initialValue=''
+              />
+            ) : null}
             <Input
               id='password'
               label='Password'
@@ -133,13 +235,54 @@ const AuthScreen = (props) => {
               onInputChange={inputChangeHandler}
               initialValue=''
             />
+            {isSignup ? (
+              <>
+                <View
+                  style={{
+                    flex: 1,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    margin: 15,
+                  }}
+                >
+                  {imageProfilePic && (
+                    <Image
+                      source={{ uri: imageProfilePic }}
+                      style={{ width: 200, height: 200 }}
+                    />
+                  )}
+                  <Button
+                    title='Upload profile picture'
+                    onPress={pickImageProfilePic}
+                  />
+                </View>
+                <View
+                  style={{
+                    flex: 1,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  {imageSIDPic && (
+                    <Image
+                      source={{ uri: imageSIDPic }}
+                      style={{ width: 200, height: 200 }}
+                    />
+                  )}
+                  <Button
+                    title='Upload Student ID picture'
+                    onPress={pickImageSIDPic}
+                  />
+                </View>
+              </>
+            ) : null}
             <View style={styles.buttonContainer}>
               {isLoading ? (
                 <ActivityIndicator size='small' color={Colors.primary} />
               ) : (
                 <Button
                   title={isSignup ? 'Sign Up' : 'Login'}
-                  color={Colors.primary}
+                  color={'black'}
                   onPress={authHandler}
                 />
               )}
@@ -147,9 +290,18 @@ const AuthScreen = (props) => {
             <View style={styles.buttonContainer}>
               <Button
                 title={`${isSignup ? 'Login' : 'Sign Up'}`}
-                color={Colors.accent}
+                color={'green'}
                 onPress={() => {
                   setIsSignup((prevState) => !prevState);
+                }}
+              />
+            </View>
+            <View style={styles.buttonContainer}>
+              <Button
+                title='Home'
+                color={'blue'}
+                onPress={() => {
+                  props.navigation.navigate('App');
                 }}
               />
             </View>
@@ -166,7 +318,7 @@ AuthScreen.navigationOptions = {
 };
 
 const styles = StyleSheet.create({
-  screen: {
+  container: {
     flex: 1,
   },
   gradient: {
@@ -175,13 +327,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   authContainer: {
-    width: '80%',
+    width: '90%',
+    height: '100%',
     maxWidth: 400,
-    maxHeight: 400,
+    maxHeight: 550,
     padding: 20,
   },
   buttonContainer: {
     marginTop: 10,
+    //width: 100,
+  },
+  logoContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingBottom: 10,
+    // marginBottom:20
   },
 });
 
