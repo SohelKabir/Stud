@@ -18,7 +18,7 @@ const StartupScreen = (props) => {
       console.log('from startup ');
       const userData = await AsyncStorage.getItem('userData');
       if (!userData) {
-        props.navigation.navigate('Auth');
+        props.navigation.navigate('App');
         return;
       }
       const transformedData = JSON.parse(userData);

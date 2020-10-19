@@ -74,26 +74,28 @@ const AuthScreen = (props) => {
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
+      //base64: true,
     });
 
     console.log(result);
 
     if (!result.cancelled) {
-      setImageProfilePic(result.uri);
+      setImageProfilePic(result);
     }
   };
   const pickImageSIDPic = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
+      //  base64: true,
     });
 
     console.log(result);
 
     if (!result.cancelled) {
-      setImageSIDPic(result.uri);
+      setImageSIDPic(result);
     }
   };
 
@@ -149,6 +151,7 @@ const AuthScreen = (props) => {
       }
       setIsLoading(false);
     } catch (err) {
+      console.log('authscreen error: ', err.message);
       setError(err.message);
       setIsLoading(false);
     }
@@ -247,7 +250,7 @@ const AuthScreen = (props) => {
                 >
                   {imageProfilePic && (
                     <Image
-                      source={{ uri: imageProfilePic }}
+                      source={{ uri: imageProfilePic.uri }}
                       style={{ width: 200, height: 200 }}
                     />
                   )}
@@ -265,7 +268,7 @@ const AuthScreen = (props) => {
                 >
                   {imageSIDPic && (
                     <Image
-                      source={{ uri: imageSIDPic }}
+                      source={{ uri: imageSIDPic.uri }}
                       style={{ width: 200, height: 200 }}
                     />
                   )}

@@ -1,6 +1,8 @@
 import { AsyncStorage } from 'react-native';
 import { Platform, ToastAndroid, Alert } from 'react-native';
 //import Snackbar from 'react-native-snackbar';
+import axios from 'axios';
+import mime from 'mime';
 
 export const SIGNUP = 'SIGNUP';
 export const LOGIN = 'LOGIN';
@@ -24,13 +26,49 @@ export const signup = (
   formData.append('password', password);
   formData.append('user_created_at', user_created_at);
 
-  formData.append('profile_pic', imageProfilePic);
-  formData.append('sid_pic', imageSIDPic);
+  // // formData.append('profile_pic', imageProfilePic);
+  // // formData.append('sid_pic', imageSIDPic);
+
+  // formData.append('profile_pic', {
+  //   uri:
+  //     Platform.OS === 'android'
+  //       ? imageProfilePic.uri
+  //       : imageProfilePic.uri.replace('file://', ''),
+  //   type: 'image/jpg',
+  //   name: 'profile_pic.jpg',
+  // });
+
+  // let newImageUri = imageSIDPic.uri;
+  // console.log('============uri========================');
+  // console.log(newImageUri);
+  // console.log('=============uri=======================');
+
+  //const newImageUri =  "file:///" + path.split("file:/").join("");
+
+  console.log('============uri========================');
+  console.log(imageSIDPic.uri);
+  console.log('=============uri=======================');
+
+  formData.append('sid_pic', {
+    uri: imageSIDPic.uri,
+    type: mime.getType(imageSIDPic.uri),
+    name: imageSIDPic.uri.split('/').pop(),
+  });
+  formData.append('profile_pic', {
+    uri: imageProfilePic.uri,
+    type: mime.getType(imageProfilePic.uri),
+    name: imageProfilePic.uri.split('/').pop(),
+  });
+
+  console.log('====================================');
+  console.log(formData);
+  console.log('====================================');
   return async (dispatch) => {
     const response = await fetch('http://studbd.com/api/appRegistration', {
       method: 'POST',
       // headers: {
-      //   'Content-Type': 'application/json',
+      //   Accept: 'application/json',
+      //   'Content-Type': 'multipart/form-data;',
       // },
       body: formData,
     });
@@ -45,21 +83,51 @@ export const signup = (
       console.log('=========!0k===========================');
       console.log(errorResData.message);
       console.log('============!ok========================');
-      throw new Error(message);
+      throw new Error('from !ok: ' + message);
     }
     // const resData = await response.json();
 
     // console.log('=============raw=ok======================');
-    // console.log(resData.message);
+    // console.log(response);
     // console.log('==============raw= ok=====================');
-    //const resData = await response.json();
-    const resData = await response.text();
-    // const resData = await JSON.parse(response);
-    console.log('============parsed========================');
-    console.log(resData);
-    console.log('===============parsed=====================');
+    // //const resData = await response.json();
 
-    console.log(response.message);
+    // console.log('=============raw=ok======================');
+    // console.log(response.message);
+    // console.log('==============raw= ok=====================');
+
+    // const resData = await response.json();
+    // // const resData = await response.text();
+    // // const resData = await JSON.parse(response);asd
+    // console.log('============parsed========================');
+    // console.log(resData);
+    // console.log('===============parsed=====================');
+
+    ////////////////////////
+
+    // axios({
+    //   method: 'POST',
+    //   url: 'http://localhost:3000/api/upload',
+    //   data: formData,
+    //   headers: {
+    //     'Content-Type': 'multipart/form-data',
+    //   },
+    // })
+    //   .then((success) => {
+    //     console.log('upload success');
+    //     console.log(success);
+    //   })
+    //   .catch((e) => {
+    //     console.log('error: ', e);
+    //   });
+
+    // console.log('===========res=========================');
+    // console.log(response);
+    // console.log('===========res=========================');
+
+    ////////////////////////
+
+    //console.log(response.message);
     const message = 'Signup successful! Please wait for admin approval.';
 
     if (Platform.OS != 'android') {
