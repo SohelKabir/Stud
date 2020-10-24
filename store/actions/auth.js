@@ -50,12 +50,20 @@ export const signup = (
   console.log('=============uri=======================');
 
   formData.append('sid_pic', {
-    uri: imageSIDPic.uri,
+    // uri: imageSIDPic.uri,
+    uri:
+      Platform.OS === 'android'
+        ? imageSIDPic.uri
+        : imageSIDPic.uri.replace('file://', ''),
     type: mime.getType(imageSIDPic.uri),
     name: imageSIDPic.uri.split('/').pop(),
   });
   formData.append('profile_pic', {
-    uri: imageProfilePic.uri,
+    // uri: imageProfilePic.uri,
+    uri:
+      Platform.OS === 'android'
+        ? imageProfilePic.uri
+        : imageProfilePic.uri.replace('file://', ''),
     type: mime.getType(imageProfilePic.uri),
     name: imageProfilePic.uri.split('/').pop(),
   });
@@ -87,21 +95,21 @@ export const signup = (
     }
     // const resData = await response.json();
 
-    // console.log('=============raw=ok======================');
-    // console.log(response);
-    // console.log('==============raw= ok=====================');
+    console.log('=============raw=ok======================');
+    console.log(response);
+    console.log('==============raw= ok=====================');
     // //const resData = await response.json();
 
     // console.log('=============raw=ok======================');
     // console.log(response.message);
     // console.log('==============raw= ok=====================');
 
-    // const resData = await response.json();
+    const resData = await response.json();
     // // const resData = await response.text();
     // // const resData = await JSON.parse(response);asd
-    // console.log('============parsed========================');
-    // console.log(resData);
-    // console.log('===============parsed=====================');
+    console.log('============parsed========================');
+    console.log(resData);
+    console.log('===============parsed=====================');
 
     ////////////////////////
 
@@ -128,7 +136,7 @@ export const signup = (
     ////////////////////////
 
     //console.log(response.message);
-    const message = 'Signup successful! Please wait for admin approval.';
+    const message = resData.message;
 
     if (Platform.OS != 'android') {
       Alert(message);
