@@ -91,7 +91,7 @@ export const signup = (
       console.log('=========!0k===========================');
       console.log(errorResData.message);
       console.log('============!ok========================');
-      throw new Error('from !ok: ' + message);
+      throw new Error(message);
     }
     // const resData = await response.json();
 
@@ -200,6 +200,7 @@ export const login = (email, password) => {
       type: LOGIN,
       token: resData.data.Token,
       userId: resData.data.user.user_id,
+      user: resData.data.user,
     });
 
     const expirationDate = new Date(
@@ -209,6 +210,7 @@ export const login = (email, password) => {
     saveDataToStorage(
       resData.data.Token,
       resData.data.user.user_id,
+      resData.data.user,
       expirationDate
     );
   };
@@ -234,12 +236,13 @@ export const setLogoutTimer = (expirationTime) => {
   };
 };
 
-const saveDataToStorage = (token, userId, expirationDate) => {
+const saveDataToStorage = (token, userId, user, expirationDate) => {
   AsyncStorage.setItem(
     'userData',
     JSON.stringify({
       token: token,
       userId: userId,
+      user: user,
       expiryDate: expirationDate.toISOString(),
     })
   );

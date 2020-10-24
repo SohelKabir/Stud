@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { SliderBox } from 'react-native-image-slider-box';
 import PromoCodeModal from '../../screens/PromoCodeScreen';
+import { useSelector } from 'react-redux';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -21,6 +22,9 @@ const cardHeight = cardWidth;
 const OfferCard = (props) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [itemId, setItemId] = useState('');
+
+  const isLoggedIn = useSelector((state) => !!state.auth.token);
+  const userData = useSelector((state) => state.auth.user);
 
   let TouchableCmp = TouchableOpacity;
   if (Platform.OS === 'android' && Platform.Version >= 21) {
@@ -43,6 +47,7 @@ const OfferCard = (props) => {
           brandName={props.brandName}
           title={props.title}
           offer_details={props.offer_details}
+          promoCode={isLoggedIn ? userData.promocode : 'Login to get code'}
         />
       </View>
       <View style={styles.card}>

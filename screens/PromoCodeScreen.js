@@ -22,8 +22,12 @@ const PromoCodeScreen = ({
   itemId,
   image,
   offer_details,
+  promoCode,
 }) => {
   const [modalVisible, setModalVisible] = useState(false);
+  console.log('==============promoCode======================');
+  console.log(promoCode);
+  console.log('==============promoCode======================');
   return (
     <View style={styles.centeredView}>
       <Modal
@@ -77,10 +81,10 @@ const PromoCodeScreen = ({
 
               <View style={styles.promoCodeContainer}>
                 <View style={styles.promoCodetextBorder}>
-                  <Text style={styles.promoCodetext}>SECRETCODE</Text>
+                  <Text style={styles.promoCodetext}>{promoCode}</Text>
                 </View>
                 <TouchableOpacity
-                  onPress={() => Clipboard.setString('SECRETCODE')}
+                  onPress={() => Clipboard.setString(promoCode)}
                 >
                   <View style={styles.promoClipboardContainer}>
                     <Text style={styles.promoClipboardText}>Copy</Text>

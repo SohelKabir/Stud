@@ -9,11 +9,15 @@ import {
   TouchableNativeFeedback,
   Platform,
 } from 'react-native';
+import { useSelector } from 'react-redux';
 
 import Colors from '../../constants/colors';
 import PromoCodeModal from '../../screens/PromoCodeScreen';
 
 const FashionItem = (props) => {
+  const isLoggedIn = useSelector((state) => !!state.auth.token);
+  const userData = useSelector((state) => state.auth.user);
+
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [itemId, setItemId] = useState('');
   let TouchableCmp = TouchableOpacity;
@@ -36,6 +40,7 @@ const FashionItem = (props) => {
           itemId={itemId}
           image={props.image}
           offer_details={props.offer_details}
+          promoCode={isLoggedIn ? userData.promocode : 'Login to get code'}
         />
       </View>
 
