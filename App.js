@@ -5,6 +5,8 @@ import * as Font from 'expo-font';
 
 import NavigationContainer from './navigation/NavigationContainer';
 import { store } from './store/configStore';
+import { YellowBox } from 'react-native';
+import _ from 'lodash';
 
 // const rootReducer = combineReducers({
 //   fashion: FashionReducer,
@@ -30,6 +32,14 @@ const fetchFont = () => {
 
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
+
+  YellowBox.ignoreWarnings(['Setting a timer']);
+  const _console = _.clone(console);
+  console.warn = (message) => {
+    if (message.indexOf('Setting a timer') <= -1) {
+      _console.warn(message);
+    }
+  };
 
   if (!fontLoaded) {
     return (

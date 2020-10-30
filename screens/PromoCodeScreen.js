@@ -25,9 +25,7 @@ const PromoCodeScreen = ({
   promoCode,
 }) => {
   const [modalVisible, setModalVisible] = useState(false);
-  console.log('==============promoCode======================');
-  console.log(promoCode);
-  console.log('==============promoCode======================');
+
   return (
     <View style={styles.centeredView}>
       <Modal

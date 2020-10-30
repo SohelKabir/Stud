@@ -211,7 +211,9 @@ export const login = (email, password) => {
       resData.data.Token,
       resData.data.user.user_id,
       resData.data.user,
-      expirationDate
+      expirationDate,
+      email,
+      password
     );
   };
 };
@@ -236,7 +238,14 @@ export const setLogoutTimer = (expirationTime) => {
   };
 };
 
-const saveDataToStorage = (token, userId, user, expirationDate) => {
+const saveDataToStorage = (
+  token,
+  userId,
+  user,
+  expirationDate,
+  email,
+  password
+) => {
   AsyncStorage.setItem(
     'userData',
     JSON.stringify({
@@ -244,6 +253,8 @@ const saveDataToStorage = (token, userId, user, expirationDate) => {
       userId: userId,
       user: user,
       expiryDate: expirationDate.toISOString(),
+      email: email,
+      password: password,
     })
   );
 };

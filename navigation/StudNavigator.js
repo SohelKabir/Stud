@@ -14,7 +14,6 @@ import {
   View,
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
-import { useDispatch, useSelector } from 'react-redux';
 
 import HeaderButton from '../components/UI/HeaderButton';
 import FashionScreen from '../screens/FashionScreen';
@@ -34,6 +33,7 @@ import AuthScreen from '../screens/user/AuthScreen';
 import StartupScreen from '../screens/StartupScreen';
 import * as authActions from '../store/actions/auth';
 import ReviewsScreen from '../screens/ReviewsScreen';
+import CustomDrawerComponent from '../screens/drawer/customDrawerComponent';
 
 const headerNavButton = (navData) => (
   <HeaderButtons HeaderButtonComponent={HeaderButton}>
@@ -80,6 +80,8 @@ const TabNavigator = createMaterialTopTabNavigator(
   },
 
   {
+    lazy: true,
+    animationEnabled: true,
     tabBarOptions: {
       activeTintColor: colors.primary,
       inactiveTintColor: colors.primary,
@@ -204,6 +206,26 @@ const supportStackNavigatior = createStackNavigator(
     },
   }
 );
+// const authStackNavigatior = createStackNavigator(
+//   {
+//     Auth: {
+//       screen: AuthScreen,
+
+//       navigationOptions: (navData) => ({
+//         headerTitle: 'Auth',
+//         headerLeft: () => headerNavButton(navData),
+//       }),
+//     },
+//   }
+//   // {
+//   //   navigationOptions: {
+//   //     drawerLabel: 'Support',
+//   //     drawerIcon: (drawerConfig) => (
+//   //       <FontAwesome name='support' size={24} color={drawerConfig.tintColor} />
+//   //     ),
+//   //   },
+//   // }
+// );
 const aboutStackNavigatior = createStackNavigator(
   {
     About: {
@@ -239,59 +261,69 @@ const drawerNavigator = createDrawerNavigator(
     About: aboutStackNavigatior,
   },
   {
-    contentComponent: (props) => {
-      const dispatch = useDispatch();
-      const state = useSelector((state) => state);
-
-      const token = !!state.auth.token;
-
-      return (
-        <>
-          {token ? (
-            <View style={{ flex: 1, paddingTop: 20 }}>
-              <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }}>
-                <DrawerItems {...props} />
-                <Button
-                  title='Logout'
-                  color={colors.primary}
-                  onPress={() => {
-                    dispatch(authActions.logout());
-                    //  props.navigation.navigate('Auth');
-                  }}
-                />
-              </SafeAreaView>
-            </View>
-          ) : (
-            <View style={{ flex: 1, paddingTop: 20 }}>
-              <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }}>
-                <DrawerItems {...props} />
-                <Button
-                  title='Login'
-                  color={colors.primary}
-                  onPress={() => {
-                    // dispatch(authActions.logout());
-                    props.navigation.navigate('Auth');
-                  }}
-                />
-              </SafeAreaView>
-            </View>
-          )}
-        </>
-      );
-    },
+    contentComponent: CustomDrawerComponent,
   }
+  // {
+  //   contentComponent: (props) => {
+  //     const dispatch = useDispatch();
+  //     const state = useSelector((state) => state);
+
+  //     const token = !!state.auth.token;
+
+  //     return (
+  //       <>
+  //         {token ? (
+  //           <View style={{ flex: 1, paddingTop: 20 }}>
+  //             <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }}>
+  //               <DrawerItems {...props} />
+  //               <Button
+  //                 title='Logout'
+  //                 color={colors.primary}
+  //                 onPress={() => {
+  //                   dispatch(authActions.logout());
+  //                   //  props.navigation.navigate('Auth');
+  //                 }}
+  //               />
+  //             </SafeAreaView>
+  //           </View>
+  //         ) : (
+  //           <View style={{ flex: 1, paddingTop: 20 }}>
+  //             <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }}>
+  //               <DrawerItems {...props} />
+  //               <Button
+  //                 title='Login'
+  //                 color={colors.primary}
+  //                 onPress={() => {
+  //                   // dispatch(authActions.logout());
+  //                   props.navigation.navigate('Auth');
+  //                 }}
+  //               />
+  //             </SafeAreaView>
+  //           </View>
+  //         )}
+  //       </>
+  //     );
+  //   },
+  // }
 );
 
 const MainNavigator = createSwitchNavigator(
   {
-    App: drawerNavigator,
-    //Startup: StartupScreen,
+    App: {
+      screen: drawerNavigator,
+      path: 'app',
+    },
     Auth: {
       screen: AuthScreen,
+      path: 'auth',
+    },
+    Startup: {
+      screen: StartupScreen,
+      path: 'startup',
     },
   },
   {
-    initialRouteName: 'App',
+    initialRouteName: 'Startup',
   }
 );
 
