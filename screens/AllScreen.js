@@ -26,22 +26,6 @@ const AllScreen = (props) => {
 
   const token = useSelector((state) => !!state.auth.token);
 
-  // useEffect(() => {
-  //   const checkLogin = async () => {
-  //     const userData = await AsyncStorage.getItem('userData');
-
-  //     console.log('====================================');
-  //     console.log(userData);
-  //     console.log('====================================');
-  //     //userData = userData;
-  //     if (!token && userData) {
-  //       props.navigation.navigate('Startup');
-  //     }
-  //   };
-
-  //   checkLogin();
-  // }, []);
-
   const [isLoading, setIsLoading] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [error, setError] = useState('');
@@ -117,7 +101,7 @@ const AllScreen = (props) => {
   if (!isLoading && home.length === 0) {
     return (
       <View style={styles.centered}>
-        <Text>Data unavailabe right now please pull to refresh the page !</Text>
+        <ActivityIndicator size='large' color={Colors.primary} />
       </View>
     );
   }

@@ -57,7 +57,7 @@ const OfferCard = (props) => {
             onPress={() => handleModal(true, props.title)}
           >
             <View style={styles.itemContainer}>
-              <View>
+              <View style={styles.OfferTextContainer}>
                 <Text style={styles.OfferText}>Offer</Text>
               </View>
 
@@ -70,7 +70,7 @@ const OfferCard = (props) => {
                 />
               </View>
 
-              <View>
+              <View style={styles.discountTextContainer}>
                 <Text style={styles.discountText}>{props.title}</Text>
               </View>
             </View>
@@ -101,10 +101,20 @@ const styles = StyleSheet.create({
   touchable: {
     borderRadius: 10,
     overflow: 'hidden',
+    // minHeight: cardHeight,
   },
   itemContainer: {
     display: 'flex',
-    // backgroundColor: 'blue',
+    //  backgroundColor: 'blue',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    // minWidth: cardWidth - 5,
+    height: cardHeight - 5,
+  },
+  OfferTextContainer: {
+    alignSelf: 'flex-start',
+    flex: 1,
   },
   OfferText: {
     // backgroundColor: 'yellow',
@@ -119,10 +129,11 @@ const styles = StyleSheet.create({
     height: 70,
     width: 150,
     alignItems: 'center',
-    marginLeft: 20,
+    // marginLeft: 20,
+    flex: 2,
   },
   image: {
-    marginTop: 20,
+    // marginTop: 5,
     width: '80%',
     height: '80%',
   },
@@ -130,7 +141,16 @@ const styles = StyleSheet.create({
     color: 'brown',
     fontFamily: 'open-sans',
     fontSize: 14,
-    marginTop: 20,
+    margin: 5,
     marginLeft: 10,
+    // alignSelf: 'flex-end',
+  },
+  discountTextContainer: {
+    flex: 1,
+    // backgroundColor: 'red',
+    //alignSelf: 'flex-end',
+    marginBottom: 5,
+    // alignItems: 'flex-end',
+    justifyContent: 'center',
   },
 });
