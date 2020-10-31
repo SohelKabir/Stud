@@ -147,10 +147,12 @@ const styles = StyleSheet.create({
   },
   discountTextContainer: {
     flex: 1,
-    // backgroundColor: 'red',
+    //  backgroundColor: 'red',
     //alignSelf: 'flex-end',
     marginBottom: 5,
     // alignItems: 'flex-end',
     justifyContent: 'center',
+    flexWrap: 'wrap',
+    alignItems: 'flex-start',
   },
 });
