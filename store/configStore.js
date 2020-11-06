@@ -10,6 +10,8 @@ import FoodReducer from './reducers/food';
 import HealthReducer from './reducers/health';
 import HomeReducer from './reducers/home';
 import AuthReducer from './reducers/auth';
+import BrandsReducer from './reducers/brands';
+import BrandwiseReviewsReducer from './reducers/brandwiseReview';
 
 const rootReducer = combineReducers({
   fashion: FashionReducer,
@@ -19,6 +21,8 @@ const rootReducer = combineReducers({
   health: HealthReducer,
   home: HomeReducer,
   auth: AuthReducer,
+  brands: BrandsReducer,
+  brandwiseReviews: BrandwiseReviewsReducer,
 });
 
 export const store = createStore(

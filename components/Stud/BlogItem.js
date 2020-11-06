@@ -8,10 +8,14 @@ import {
   TouchableOpacity,
   TouchableNativeFeedback,
   Platform,
+  Dimensions,
 } from 'react-native';
 import { Rating, AirbnbRating } from 'react-native-ratings';
 
 import Colors from '../../constants/colors';
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 const BlogItem = (props) => {
   let TouchableCmp = TouchableOpacity;
@@ -82,6 +86,7 @@ const styles = StyleSheet.create({
     height: 100,
     margin: 12,
     marginVertical: 7,
+    width: windowWidth - 15,
   },
   touchable: {
     borderRadius: 10,

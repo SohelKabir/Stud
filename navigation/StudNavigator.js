@@ -34,6 +34,7 @@ import StartupScreen from '../screens/StartupScreen';
 import * as authActions from '../store/actions/auth';
 import ReviewsScreen from '../screens/ReviewsScreen';
 import CustomDrawerComponent from '../screens/drawer/customDrawerComponent';
+import BrandwiseReviewScreen from '../screens/brandwiseReviewScreen';
 
 const headerNavButton = (navData) => (
   <HeaderButtons HeaderButtonComponent={HeaderButton}>
@@ -131,6 +132,12 @@ const StudNavigator = createStackNavigator(
       screen: PromoCodeScreen,
       navigationOptions: ({ navigation }) => {
         return { headerTitle: 'Promo Code' };
+      },
+    },
+    BrandwiseReview: {
+      screen: BrandwiseReviewScreen,
+      navigationOptions: ({ navigation }) => {
+        return { headerTitle: navigation.getParam('brandName') };
       },
     },
   },

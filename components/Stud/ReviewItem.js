@@ -35,22 +35,19 @@ const OfferCard = (props) => {
   };
   return (
     <>
-      <View>
-        <PromoCodeModal
-          isModalVisible={isModalVisible}
-          handleModal={handleModal}
-          //itemId={itemId}
-          image={props.image}
-          brandName={props.brandName}
-          title={props.title}
-          offer_details={props.offer_details}
-        />
-      </View>
       <View style={styles.card}>
         <View style={styles.touchable}>
           <TouchableCmp
             useForeground
-            onPress={() => handleModal(true, props.title)}
+            onPress={() => {
+              console.log('====================================');
+              console.log('pressed');
+              console.log('====================================');
+              props.navigation.navigate('BrandwiseReview', {
+                brandName: props.brand,
+                // fashionTitle: itemData.item.title,
+              });
+            }}
           >
             <View style={styles.itemContainer}>
               <View style={styles.logo}>

@@ -10,24 +10,30 @@ import {
   Button,
 } from 'react-native';
 
-import ReviewItem from '../components/Stud/ReviewItem';
-import { setBrands } from '../store/actions/brands';
 import { setBrandwiseReviews } from '../store/actions/brandwiseReview';
 import Colors from '../constants/colors';
+import BlogItem from '../components/Stud/BlogItem';
 
-const ReviewsScreen = (props) => {
+const BrandwiseReview = (props) => {
   const dispatch = useDispatch();
+
+  const brandName = props.navigation.getParam('brandName');
+
+  console.log('=============brandName=======================');
+  console.log(props);
+  console.log(brandName);
+  console.log('===============brandName=====================');
 
   const [isLoading, setIsLoading] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [error, setError] = useState('');
 
-  const loadBrands = useCallback(async () => {
+  const loadBrandwiseReview = useCallback(async () => {
     setError(null);
     setIsRefreshing(true);
     try {
-      await dispatch(setBrands());
-      //await dispatch(setBrandwiseReviews('Madchef'));
+      console.log('Before Dispatch');
+      await dispatch(setBrandwiseReviews(brandName));
     } catch (error) {
       setError(error);
     }
@@ -37,17 +43,30 @@ const ReviewsScreen = (props) => {
 
   useEffect(() => {
     setIsLoading(true);
-    loadBrands();
+    loadBrandwiseReview();
     setIsLoading(false);
-  }, [dispatch, loadBrands]);
+  }, [dispatch, loadBrandwiseReview]);
 
-  const brands = useSelector((state) => state.brands);
+  const brandwiseReviews = useSelector(
+    (state) => state.brandwiseReviews.searchResult
+  );
+  const brandwiseReviewsLength = useSelector(
+    (state) => state.brandwiseReviews.totalRows
+  );
+
+  console.log('===========brandwiseReviews=========================');
+  console.log(brandwiseReviews);
+  console.log('=============brandwiseReviews=======================');
 
   if (error) {
     return (
       <View style={styles.centered}>
         <Text>An error occurred!</Text>
-        <Button title='Try again' onPress={loadBrands} color={Colors.primary} />
+        <Button
+          title='Try again'
+          onPress={loadBrandwiseReview}
+          color={Colors.primary}
+        />
       </View>
     );
   }
@@ -60,10 +79,10 @@ const ReviewsScreen = (props) => {
     );
   }
 
-  if (!isLoading && brands.length === 0) {
+  if (!isLoading && brandwiseReviewsLength == 0) {
     return (
       <View style={styles.centered}>
-        <Text>No brands found!</Text>
+        <Text>No reviews found!</Text>
       </View>
     );
   }
@@ -71,8 +90,8 @@ const ReviewsScreen = (props) => {
   return (
     <View style={styles.FlatListContainer}>
       <FlatList
-        data={brands}
-        onRefresh={loadBrands}
+        data={brandwiseReviews}
+        onRefresh={loadBrandwiseReview}
         refreshing={isRefreshing}
         columnWrapperStyle={{
           flexWrap: 'wrap',
@@ -82,19 +101,18 @@ const ReviewsScreen = (props) => {
         numColumns={2}
         keyExtractor={(item, index) => index.toString()}
         renderItem={(itemData) => (
-          <ReviewItem
-            image={itemData.item.brand_image_url}
+          <BlogItem
+            image={itemData.item.review_image_url}
             // price={itemData.item.price}
             title={itemData.item.review_title}
-            brand={itemData.item.brand_name}
+            brand={itemData.item.sale_brand_name}
             rating={itemData.item.review_rating}
-            navigation={props.navigation}
-            onViewDetail={() =>
-              props.navigation.navigate('BrandwiseReview', {
-                brandName: itemData.item.brand_name,
-                // fashionTitle: itemData.item.title,
-              })
-            }
+            // onViewDetail={() =>
+            //   props.navigation.navigate('FashionDetail', {
+            //     fashionId: itemData.item.id,
+            //     fashionTitle: itemData.item.title,
+            //   })
+            // }
           />
         )}
       />
@@ -108,4 +126,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ReviewsScreen;
+export default BrandwiseReview;
