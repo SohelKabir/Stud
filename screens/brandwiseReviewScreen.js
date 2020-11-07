@@ -45,31 +45,35 @@ const BrandwiseReview = (props) => {
 
     setIsRefreshing(false);
   }, [dispatch, setIsLoading, setError]);
-
   useEffect(() => {
     setIsLoading(true);
     loadBrandwiseReview();
     setIsLoading(false);
   }, [dispatch, loadBrandwiseReview]);
 
+  useEffect(() => {
+    console.log('==============RUnning======================');
+    console.log('RUnning');
+    console.log('==============RUnning======================');
+  }, []);
+
+  console.log('===========isLoading Out========================');
+  console.log(isLoading);
+  console.log('===============isLoading= Out====================');
+
   const brandwiseReviews = useSelector(
     (state) => state.brandwiseReviews.searchResult
   );
-  const brandwiseReviewsLength = useSelector(
-    (state) => state.brandwiseReviews.totalRows
-  );
+  const brandwiseReviewsLength = useSelector((state) => state.brandwiseReviews);
   const brandwiseOffer = useSelector((state) => state.brandwiseOffer);
   const brands = useSelector((state) => state.brands);
 
   const brandInfo = brands.filter((brand) => brand.brand_name === brandName);
 
-  console.log('==============brandInfo======================');
-  console.log(brandInfo);
-  console.log('=================brandInfo===================');
   //data for sectionList
   const combineData = [
-    { title: 'Offers', data: [...brandwiseOffer] },
-    { title: 'Reviews', data: [...brandwiseReviews] },
+    { title: 'Offers', data: brandwiseOffer },
+    { title: 'Reviews', data: brandwiseReviews },
   ];
 
   // console.log('==============combineData======================');
@@ -84,22 +88,6 @@ const BrandwiseReview = (props) => {
           onPress={loadBrandwiseReview}
           color={Colors.primary}
         />
-      </View>
-    );
-  }
-
-  if (isLoading) {
-    return (
-      <View style={styles.centered}>
-        <ActivityIndicator size='large' color={Colors.primary} />
-      </View>
-    );
-  }
-
-  if (!isLoading && brandwiseReviewsLength == 0) {
-    return (
-      <View style={styles.centered}>
-        <Text>No data found!</Text>
       </View>
     );
   }
@@ -133,6 +121,35 @@ const BrandwiseReview = (props) => {
       </View>
     </>
   );
+
+  if (isLoading) {
+    return (
+      <View style={styles.centered}>
+        <ActivityIndicator size='large' color={Colors.primary} />
+      </View>
+    );
+  }
+  if (
+    !isLoading &&
+    (brandwiseOffer.length == 1 || brandwiseReviewsLength.length == 1)
+  ) {
+    return (
+      <View style={styles.centered}>
+        <ActivityIndicator size='large' color={Colors.primary} />
+      </View>
+    );
+  }
+
+  if (
+    !isLoading &&
+    (brandwiseOffer.length == 0 || brandwiseReviewsLength.length == 0)
+  ) {
+    return (
+      <View style={styles.centered}>
+        <Text>No data found!</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.FlatListContainer}>
@@ -179,46 +196,17 @@ const BrandwiseReview = (props) => {
           </>
         )}
       />
-
-      {/**  <FlatList
-        data={brandwiseReviews}
-        onRefresh={loadBrandwiseReview}
-        refreshing={isRefreshing}
-        columnWrapperStyle={{
-          flexWrap: 'wrap',
-          flex: 1,
-          justifyContent: 'center',
-        }}
-        numColumns={2}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={(itemData) => (
-          <>
-            <BlogItem
-              image={itemData.item.review_image_url}
-              // price={itemData.item.price}
-              title={itemData.item.review_title}
-              brand={itemData.item.sale_brand_name}
-              rating={itemData.item.review_rating}
-              // onViewDetail={() =>
-              //   props.navigation.navigate('FashionDetail', {
-              //     fashionId: itemData.item.id,
-              //     fashionTitle: itemData.item.title,
-              //   })
-              // }
-            />
-          </>
-        )}
-        /> **/}
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   centered: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    flexWrap: 'wrap',
-    flexDirection: 'column',
+    // flexWrap: 'wrap',
+    // flexDirection: 'column',
   },
   FlatListContainer: {
     backgroundColor: '#fff',

@@ -14,6 +14,7 @@ import ReviewItem from '../components/Stud/ReviewItem';
 import { setBrands } from '../store/actions/brands';
 import { setBrandwiseReviews } from '../store/actions/brandwiseReview';
 import Colors from '../constants/colors';
+import { setBrandwiseOffer } from '../store/actions/brandwiseOffer';
 
 const ReviewsScreen = (props) => {
   const dispatch = useDispatch();
@@ -27,7 +28,8 @@ const ReviewsScreen = (props) => {
     setIsRefreshing(true);
     try {
       await dispatch(setBrands());
-      //await dispatch(setBrandwiseReviews('Madchef'));
+      // await dispatch(setBrandwiseReviews('Madchef'));
+      // await dispatch(setBrandwiseOffer());
     } catch (error) {
       setError(error);
     }
@@ -53,6 +55,13 @@ const ReviewsScreen = (props) => {
   }
 
   if (isLoading) {
+    return (
+      <View style={styles.centered}>
+        <ActivityIndicator size='large' color={Colors.primary} />
+      </View>
+    );
+  }
+  if (!isLoading && brands.length === 1) {
     return (
       <View style={styles.centered}>
         <ActivityIndicator size='large' color={Colors.primary} />
