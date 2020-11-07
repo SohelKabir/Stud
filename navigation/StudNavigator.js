@@ -77,7 +77,7 @@ const TabNavigator = createMaterialTopTabNavigator(
     //     };
     //   },
     // },
-    Reviews: ReviewsScreen,
+    Brands: ReviewsScreen,
   },
 
   {

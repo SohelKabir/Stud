@@ -8,21 +8,26 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Button,
+  SectionList,
+  Dimensions,
+  Image,
 } from 'react-native';
+import { Divider } from 'react-native-elements';
+import { Rating, AirbnbRating } from 'react-native-ratings';
 
 import { setBrandwiseReviews } from '../store/actions/brandwiseReview';
+import { setBrandwiseOffer } from '../store/actions/brandwiseOffer';
 import Colors from '../constants/colors';
 import BlogItem from '../components/Stud/BlogItem';
+import BigCard from '../components/Stud/BigCard';
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 const BrandwiseReview = (props) => {
   const dispatch = useDispatch();
 
   const brandName = props.navigation.getParam('brandName');
-
-  console.log('=============brandName=======================');
-  console.log(props);
-  console.log(brandName);
-  console.log('===============brandName=====================');
 
   const [isLoading, setIsLoading] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -32,7 +37,7 @@ const BrandwiseReview = (props) => {
     setError(null);
     setIsRefreshing(true);
     try {
-      console.log('Before Dispatch');
+      await dispatch(setBrandwiseOffer());
       await dispatch(setBrandwiseReviews(brandName));
     } catch (error) {
       setError(error);
@@ -53,11 +58,23 @@ const BrandwiseReview = (props) => {
   const brandwiseReviewsLength = useSelector(
     (state) => state.brandwiseReviews.totalRows
   );
+  const brandwiseOffer = useSelector((state) => state.brandwiseOffer);
+  const brands = useSelector((state) => state.brands);
 
-  console.log('===========brandwiseReviews=========================');
-  console.log(brandwiseReviews);
-  console.log('=============brandwiseReviews=======================');
+  const brandInfo = brands.filter((brand) => brand.brand_name === brandName);
 
+  console.log('==============brandInfo======================');
+  console.log(brandInfo);
+  console.log('=================brandInfo===================');
+  //data for sectionList
+  const combineData = [
+    { title: 'Offers', data: [...brandwiseOffer] },
+    { title: 'Reviews', data: [...brandwiseReviews] },
+  ];
+
+  // console.log('==============combineData======================');
+  // console.log(combineData);
+  // console.log('===============combineData=====================');
   if (error) {
     return (
       <View style={styles.centered}>
@@ -82,14 +99,88 @@ const BrandwiseReview = (props) => {
   if (!isLoading && brandwiseReviewsLength == 0) {
     return (
       <View style={styles.centered}>
-        <Text>No reviews found!</Text>
+        <Text>No data found!</Text>
       </View>
     );
   }
+  const headerComponent = () => (
+    <>
+      <View style={styles.headerContainer}>
+        {/***<Text style={styles.brandName}>{brandInfo[0].brand_name}</Text> */}
+        <View style={styles.logoContainer}>
+          <Image
+            source={{ uri: brandInfo[0].brand_image_url }}
+            style={{ height: 100, width: 100 }}
+          />
+        </View>
+        <View style={styles.ratingContainer}>
+          <AirbnbRating
+            showRating={false}
+            ratingCount={5}
+            defaultRating={4} //props.rating
+            //  onFinishRating={ratingCompleted}
+            size={20}
+            reviews={['Terrible', 'Bad', 'Okay', 'Good', 'Great']}
+            starContainerStyle={styles.rating}
+            isDisabled={true}
+          />
+        </View>
+        <Text style={styles.brandAddress}>
+          {brandInfo[0].brand_store_location !== null
+            ? brandInfo[0].brand_store_location
+            : 'Address unavailable'}
+        </Text>
+      </View>
+    </>
+  );
 
   return (
     <View style={styles.FlatListContainer}>
-      <FlatList
+      <SectionList
+        sections={combineData}
+        onRefresh={loadBrandwiseReview}
+        refreshing={isRefreshing}
+        keyExtractor={(item, index) => item + index}
+        ListHeaderComponent={headerComponent}
+        // ListFooterComponent={() => <View style={styles.divider} />}
+        renderItem={({ item }) => {
+          return (
+            <>
+              {item.offer_brand ? (
+                <View style={styles.BigCardContainer}>
+                  <BigCard
+                    image={item.offer_image_url}
+                    brandName={item.offer_brand}
+                    title={item.offer_name}
+                    offer_details={item.offer_details}
+                  />
+                </View>
+              ) : (
+                <BlogItem
+                  image={item.review_image_url}
+                  // price={itemData.item.price}
+                  title={item.review_title}
+                  brand={item.sale_brand_name}
+                  rating={item.review_rating}
+                />
+              )}
+            </>
+          );
+        }}
+        renderSectionHeader={({ section: { title } }) => (
+          <>
+            <View style={{ paddingTop: 10 }}>
+              <View style={styles.divider} />
+            </View>
+            <View style={styles.titleContainer}>
+              <Text style={styles.title}>{title}</Text>
+            </View>
+            <View style={styles.divider} />
+          </>
+        )}
+      />
+
+      {/**  <FlatList
         data={brandwiseReviews}
         onRefresh={loadBrandwiseReview}
         refreshing={isRefreshing}
@@ -101,28 +192,85 @@ const BrandwiseReview = (props) => {
         numColumns={2}
         keyExtractor={(item, index) => index.toString()}
         renderItem={(itemData) => (
-          <BlogItem
-            image={itemData.item.review_image_url}
-            // price={itemData.item.price}
-            title={itemData.item.review_title}
-            brand={itemData.item.sale_brand_name}
-            rating={itemData.item.review_rating}
-            // onViewDetail={() =>
-            //   props.navigation.navigate('FashionDetail', {
-            //     fashionId: itemData.item.id,
-            //     fashionTitle: itemData.item.title,
-            //   })
-            // }
-          />
+          <>
+            <BlogItem
+              image={itemData.item.review_image_url}
+              // price={itemData.item.price}
+              title={itemData.item.review_title}
+              brand={itemData.item.sale_brand_name}
+              rating={itemData.item.review_rating}
+              // onViewDetail={() =>
+              //   props.navigation.navigate('FashionDetail', {
+              //     fashionId: itemData.item.id,
+              //     fashionTitle: itemData.item.title,
+              //   })
+              // }
+            />
+          </>
         )}
-      />
+        /> **/}
     </View>
   );
 };
 const styles = StyleSheet.create({
-  centered: { flex: 1, justifyContent: 'center', alignItems: 'center' },
+  centered: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    flexDirection: 'column',
+  },
   FlatListContainer: {
     backgroundColor: '#fff',
+    flex: 1,
+    // justifyContent: 'center',
+    //  alignItems: 'center',
+    // flexWrap: 'wrap',
+    // flexDirection: 'row',
+  },
+  BigCardContainer: {
+    width: Dimensions.get('window').width,
+  },
+  titleContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 15,
+  },
+  title: {
+    fontSize: 20,
+    fontFamily: 'open-sans-bold',
+    color: Colors.tomato,
+  },
+  headerContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 5,
+  },
+  brandName: {
+    fontSize: 20,
+    color: Colors.accent,
+    fontFamily: 'open-sans-bold',
+    paddingBottom: 10,
+  },
+  brandAddress: {
+    fontSize: 15,
+    color: Colors.grey,
+    fontFamily: 'open-sans',
+    padding: 5,
+    paddingHorizontal: 10,
+  },
+  logoContainer: {
+    paddingVertical: 10,
+  },
+  ratingContainer: {
+    alignItems: 'flex-start',
+  },
+  divider: {
+    marginVertical: 10,
+    borderBottomColor: 'black',
+    borderBottomWidth: 0.5,
   },
 });
 
