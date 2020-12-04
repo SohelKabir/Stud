@@ -183,7 +183,12 @@ export const login = (email, password) => {
       // } else if (errorId === 'INVALID_PASSWORD') {
       //   message = 'This password is not valid!';
       // }
-      throw new Error(message);
+      if (Platform.OS != 'android') {
+        Alert(message);
+      } else {
+        ToastAndroid.show(message, ToastAndroid.LONG);
+      }
+      // throw new Error(message);
     }
 
     console.log('=============raw=======================');
@@ -194,6 +199,12 @@ export const login = (email, password) => {
     console.log('============parsed========================');
     console.log(resData);
     console.log('===============parsed=====================');
+
+    if (Platform.OS != 'android') {
+      Alert(resData.message);
+    } else {
+      ToastAndroid.show(resData.message, ToastAndroid.LONG);
+    }
 
     dispatch(setLogoutTimer(parseInt(resData.data.expiresIn) * 1000));
     dispatch({

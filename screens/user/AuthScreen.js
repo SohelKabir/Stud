@@ -125,16 +125,46 @@ const AuthScreen = (props) => {
 
   const authHandler = async () => {
     let action;
+
     if (isSignup) {
-      action = authActions.signup(
-        formState.inputValues.name,
-        formState.inputValues.email,
-        formState.inputValues.phone,
-        formState.inputValues.password,
-        user_created_at,
-        imageProfilePic,
-        imageSIDPic
-      );
+      console.log('====================================');
+      console.log(imageProfilePic);
+      console.log(imageSIDPic);
+      console.log(isSignup);
+      console.log('====================================');
+      if (imageSIDPic === null) {
+        if (Platform.OS != 'android') {
+          Alert(message);
+        } else {
+          ToastAndroid.showWithGravity(
+            'All fields are mandatory',
+            ToastAndroid.LONG,
+            ToastAndroid.BOTTOM
+          );
+        }
+        return;
+      } else if (imageProfilePic === null) {
+        if (Platform.OS != 'android') {
+          Alert(message);
+        } else {
+          ToastAndroid.showWithGravity(
+            'All fields are mandatory',
+            ToastAndroid.LONG,
+            ToastAndroid.BOTTOM
+          );
+        }
+        return;
+      } else {
+        action = authActions.signup(
+          formState.inputValues.name,
+          formState.inputValues.email,
+          formState.inputValues.phone,
+          formState.inputValues.password,
+          user_created_at,
+          imageProfilePic,
+          imageSIDPic
+        );
+      }
     } else {
       action = authActions.login(
         formState.inputValues.email,

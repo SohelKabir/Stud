@@ -92,8 +92,7 @@ const PromoCodeScreen = ({
 
               <View style={styles.offerDescriptionContainer2}>
                 <Text style={styles.offerDescription2}>
-                  This code can be used multipletimes. You can share it with
-                  friends and family.
+                  This code can be used single time.
                 </Text>
               </View>
               <View style={styles.divider} />

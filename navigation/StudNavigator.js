@@ -5,6 +5,7 @@ import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer';
 import { Ionicons } from '@expo/vector-icons';
+import { Octicons } from '@expo/vector-icons';
 import {
   Platform,
   Text,
@@ -35,7 +36,7 @@ import * as authActions from '../store/actions/auth';
 import ReviewsScreen from '../screens/ReviewsScreen';
 import CustomDrawerComponent from '../screens/drawer/customDrawerComponent';
 import BrandwiseReviewScreen from '../screens/brandwiseReviewScreen';
-
+import PurchaseHistoryScreen from '../screens/PurchaseHistoryScreen';
 const headerNavButton = (navData) => (
   <HeaderButtons HeaderButtonComponent={HeaderButton}>
     <Item
@@ -257,13 +258,35 @@ const aboutStackNavigatior = createStackNavigator(
     },
   }
 );
+const purchaseHistoryStackNavigatior = createStackNavigator(
+  {
+    About: {
+      screen: PurchaseHistoryScreen,
+
+      navigationOptions: (navData) => ({
+        headerTitle: 'Purchases',
+        headerLeft: () => headerNavButton(navData),
+      }),
+    },
+  },
+  {
+    navigationOptions: {
+      drawerLabel: 'Purchases',
+      drawerIcon: (drawerConfig) => (
+        <Octicons name='history' size={24} color='black' />
+      ),
+    },
+  }
+);
 
 const drawerNavigator = createDrawerNavigator(
   {
     Home: StudNavigator,
+    Purchases: purchaseHistoryStackNavigatior,
     Setting: {
       screen: settingStackNavigatior,
     },
+
     Support: supportStackNavigatior,
     About: aboutStackNavigatior,
   },
