@@ -26,7 +26,7 @@ import FoodAndDrinkScreen from '../screens/FoodAndDrinkScreen';
 import BeautyScreen from '../screens/BeautyScreen';
 import SettingScreen from '../screens/SettingScreen';
 import AboutScreen from '../screens/AboutScreen';
-import SupportScreen from '../screens/SupportScreen';
+import ProfileScreen from '../screens/ProfileScreen';
 import AllScreen from '../screens/AllScreen';
 import CompaniesAndShopsScreen from '../screens/CompaniesAndShopsScreen';
 import PromoCodeScreen from '../screens/PromoCodeScreen';
@@ -37,6 +37,10 @@ import ReviewsScreen from '../screens/ReviewsScreen';
 import CustomDrawerComponent from '../screens/drawer/customDrawerComponent';
 import BrandwiseReviewScreen from '../screens/brandwiseReviewScreen';
 import PurchaseHistoryScreen from '../screens/PurchaseHistoryScreen';
+import { store } from '../store/configStore';
+
+const state = store.getState();
+const token = state.auth.token;
 const headerNavButton = (navData) => (
   <HeaderButtons HeaderButtonComponent={HeaderButton}>
     <Item
@@ -194,22 +198,22 @@ const settingStackNavigatior = createStackNavigator(
     },
   }
 );
-const supportStackNavigatior = createStackNavigator(
+const profileStackNavigatior = createStackNavigator(
   {
-    Support: {
-      screen: SupportScreen,
+    Profile: {
+      screen: ProfileScreen,
 
       navigationOptions: (navData) => ({
-        headerTitle: 'Support',
+        headerTitle: 'Profile',
         headerLeft: () => headerNavButton(navData),
       }),
     },
   },
   {
     navigationOptions: {
-      drawerLabel: 'Support',
+      drawerLabel: 'Profile',
       drawerIcon: (drawerConfig) => (
-        <FontAwesome name='support' size={24} color={drawerConfig.tintColor} />
+        <FontAwesome name='user' size={24} color={drawerConfig.tintColor} />
       ),
     },
   }
@@ -278,64 +282,31 @@ const purchaseHistoryStackNavigatior = createStackNavigator(
     },
   }
 );
-
-const drawerNavigator = createDrawerNavigator(
-  {
-    Home: StudNavigator,
-    Purchases: purchaseHistoryStackNavigatior,
-    Setting: {
-      screen: settingStackNavigatior,
-    },
-
-    Support: supportStackNavigatior,
-    About: aboutStackNavigatior,
+const loggedInDrawer = {
+  Home: StudNavigator,
+  Purchases: purchaseHistoryStackNavigatior,
+  Setting: {
+    screen: settingStackNavigatior,
   },
-  {
-    contentComponent: CustomDrawerComponent,
-  }
-  // {
-  //   contentComponent: (props) => {
-  //     const dispatch = useDispatch();
-  //     const state = useSelector((state) => state);
 
-  //     const token = !!state.auth.token;
+  Profile: profileStackNavigatior,
+  About: aboutStackNavigatior,
+};
 
-  //     return (
-  //       <>
-  //         {token ? (
-  //           <View style={{ flex: 1, paddingTop: 20 }}>
-  //             <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }}>
-  //               <DrawerItems {...props} />
-  //               <Button
-  //                 title='Logout'
-  //                 color={colors.primary}
-  //                 onPress={() => {
-  //                   dispatch(authActions.logout());
-  //                   //  props.navigation.navigate('Auth');
-  //                 }}
-  //               />
-  //             </SafeAreaView>
-  //           </View>
-  //         ) : (
-  //           <View style={{ flex: 1, paddingTop: 20 }}>
-  //             <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }}>
-  //               <DrawerItems {...props} />
-  //               <Button
-  //                 title='Login'
-  //                 color={colors.primary}
-  //                 onPress={() => {
-  //                   // dispatch(authActions.logout());
-  //                   props.navigation.navigate('Auth');
-  //                 }}
-  //               />
-  //             </SafeAreaView>
-  //           </View>
-  //         )}
-  //       </>
-  //     );
-  //   },
-  // }
-);
+// const loggedOutDrawer = {
+//   Home: StudNavigator,
+//   // Purchases: purchaseHistoryStackNavigatior,
+//   Setting: {
+//     screen: settingStackNavigatior,
+//   },
+
+//   Profile: profileStackNavigatior,
+//   About: aboutStackNavigatior,
+// };
+
+const drawerNavigator = createDrawerNavigator(loggedInDrawer, {
+  contentComponent: CustomDrawerComponent,
+});
 
 const MainNavigator = createSwitchNavigator(
   {

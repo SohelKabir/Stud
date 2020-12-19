@@ -37,7 +37,7 @@ const BrandwiseReview = (props) => {
     setError(null);
     setIsRefreshing(true);
     try {
-      await dispatch(setBrandwiseOffer());
+      await dispatch(setBrandwiseOffer(brandName));
       await dispatch(setBrandwiseReviews(brandName));
     } catch (error) {
       setError(error);
@@ -51,19 +51,11 @@ const BrandwiseReview = (props) => {
     setIsLoading(false);
   }, [dispatch, loadBrandwiseReview]);
 
-  useEffect(() => {
-    console.log('==============RUnning======================');
-    console.log('RUnning');
-    console.log('==============RUnning======================');
-  }, []);
-
-  console.log('===========isLoading Out========================');
-  console.log(isLoading);
-  console.log('===============isLoading= Out====================');
-
   const brandwiseReviews = useSelector(
     (state) => state.brandwiseReviews.searchResult
   );
+  const state = useSelector((state) => state);
+  const AverageRating = state.brandwiseReviews.averageReview;
   const brandwiseReviewsLength = useSelector((state) => state.brandwiseReviews);
   const brandwiseOffer = useSelector((state) => state.brandwiseOffer);
   const brands = useSelector((state) => state.brands);
@@ -105,7 +97,7 @@ const BrandwiseReview = (props) => {
           <AirbnbRating
             showRating={false}
             ratingCount={5}
-            defaultRating={4} //props.rating
+            defaultRating={AverageRating} //props.rating
             //  onFinishRating={ratingCompleted}
             size={20}
             reviews={['Terrible', 'Bad', 'Okay', 'Good', 'Great']}
@@ -129,20 +121,11 @@ const BrandwiseReview = (props) => {
       </View>
     );
   }
-  if (
-    !isLoading &&
-    (brandwiseOffer.length == 1 || brandwiseReviewsLength.length == 1)
-  ) {
-    return (
-      <View style={styles.centered}>
-        <ActivityIndicator size='large' color={Colors.primary} />
-      </View>
-    );
-  }
 
   if (
     !isLoading &&
-    (brandwiseOffer.length == 0 || brandwiseReviewsLength.length == 0)
+    brandwiseOffer.length == 0 &&
+    brandwiseReviewsLength.length == 0
   ) {
     return (
       <View style={styles.centered}>

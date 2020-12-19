@@ -70,21 +70,36 @@ const ReviewModal = ({
     try {
       if (imageReviewPic === null) {
         if (Platform.OS != 'android') {
-          Alert('All fields are Mandatory');
+          Alert.alert(
+            'Alert',
+            'All fields are mandatory',
+            [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
+            { cancelable: false }
+          );
         } else {
           ToastAndroid.show('All fields are Mandatory', ToastAndroid.LONG);
         }
       }
       if (rating === '') {
         if (Platform.OS != 'android') {
-          Alert('All fields are Mandatory');
+          Alert.alert(
+            'Alert',
+            'All fields are mandatory',
+            [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
+            { cancelable: false }
+          );
         } else {
           ToastAndroid.show('All fields are Mandatory', ToastAndroid.LONG);
         }
       }
       if (description === '') {
         if (Platform.OS != 'android') {
-          Alert('All fields are Mandatory');
+          Alert.alert(
+            'Alert',
+            'All fields are mandatory',
+            [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
+            { cancelable: false }
+          );
         } else {
           ToastAndroid.show('All fields are Mandatory', ToastAndroid.LONG);
         }
@@ -98,7 +113,12 @@ const ReviewModal = ({
       }
     } catch (error) {
       if (Platform.OS != 'android') {
-        Alert('All fields are Mandatory');
+        Alert.alert(
+          'Alert',
+          'All fields are mandatory',
+          [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
+          { cancelable: false }
+        );
       } else {
         ToastAndroid.show(error.message, ToastAndroid.LONG);
       }

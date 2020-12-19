@@ -27,6 +27,9 @@ const OfferCard = (props) => {
   if (Platform.OS === 'android' && Platform.Version >= 21) {
     TouchableCmp = TouchableNativeFeedback;
   }
+  console.log('=========rate============');
+  console.log(props.rating);
+  console.log('=rate==================');
 
   let handleModal = (status, id) => {
     setItemId(id);

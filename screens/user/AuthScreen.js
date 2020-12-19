@@ -62,7 +62,12 @@ const AuthScreen = (props) => {
           status,
         } = await ImagePicker.requestCameraRollPermissionsAsync();
         if (status !== 'granted') {
-          alert('Sorry, we need camera roll permissions to make this work!');
+          Alert.alert(
+            'Alert',
+            'App need camera access to upload photo',
+            [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
+            { cancelable: false }
+          );
         }
       }
     })();
@@ -134,7 +139,12 @@ const AuthScreen = (props) => {
       console.log('====================================');
       if (imageSIDPic === null) {
         if (Platform.OS != 'android') {
-          Alert(message);
+          Alert.alert(
+            'Alert',
+            'Select student ID',
+            [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
+            { cancelable: false }
+          );
         } else {
           ToastAndroid.showWithGravity(
             'All fields are mandatory',
@@ -145,7 +155,12 @@ const AuthScreen = (props) => {
         return;
       } else if (imageProfilePic === null) {
         if (Platform.OS != 'android') {
-          Alert(message);
+          Alert.alert(
+            'Alert',
+            'Select profile picture',
+            [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
+            { cancelable: false }
+          );
         } else {
           ToastAndroid.showWithGravity(
             'All fields are mandatory',
@@ -165,12 +180,14 @@ const AuthScreen = (props) => {
           imageSIDPic
         );
       }
-    } else {
+    }
+    if (!isSignup) {
       action = authActions.login(
         formState.inputValues.email,
         formState.inputValues.password
       );
     }
+
     setError(null);
     setIsLoading(true);
     try {

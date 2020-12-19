@@ -69,7 +69,12 @@ export const postReview = (rating, title, description, sale_id, image) => {
       console.log('============!ok========================');
 
       if (Platform.OS != 'android') {
-        Alert(message);
+        Alert.alert(
+          'Alert',
+          errorResData.message,
+          [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
+          { cancelable: false }
+        );
       } else {
         ToastAndroid.showWithGravity(
           errorResData.message,
@@ -128,7 +133,12 @@ export const postReview = (rating, title, description, sale_id, image) => {
     const message = resData;
 
     if (Platform.OS != 'android') {
-      Alert(message);
+      Alert.alert(
+        'Alert',
+        message,
+        [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
+        { cancelable: false }
+      );
     } else {
       ToastAndroid.show(message, ToastAndroid.LONG);
     }

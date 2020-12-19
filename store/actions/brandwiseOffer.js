@@ -1,8 +1,8 @@
-export const setBrandwiseOffer = () => {
+export const setBrandwiseOffer = (brandName) => {
   return async (dispatch) => {
     try {
       const response = await fetch(
-        'http://studbd.com/api/category_offers/Food'
+        `http://studbd.com/api/brand_offer/${brandName}`
       );
 
       const resData = await response.json();

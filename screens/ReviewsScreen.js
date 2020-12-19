@@ -96,14 +96,15 @@ const ReviewsScreen = (props) => {
             // price={itemData.item.price}
             title={itemData.item.review_title}
             brand={itemData.item.brand_name}
-            rating={itemData.item.review_rating}
+            rating={parseInt(itemData.item.brand_average_rating, 10)}
             navigation={props.navigation}
-            onViewDetail={() =>
+            onViewDetail={() => {
               props.navigation.navigate('BrandwiseReview', {
                 brandName: itemData.item.brand_name,
+                rating: itemData.item.brand_average_rating,
                 // fashionTitle: itemData.item.title,
-              })
-            }
+              });
+            }}
           />
         )}
       />

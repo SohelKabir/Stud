@@ -139,7 +139,12 @@ export const signup = (
     const message = resData.message;
 
     if (Platform.OS != 'android') {
-      Alert(message);
+      Alert.alert(
+        'Alert',
+        message,
+        [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
+        { cancelable: false }
+      );
     } else {
       ToastAndroid.show(message, ToastAndroid.LONG);
     }
@@ -184,7 +189,12 @@ export const login = (email, password) => {
       //   message = 'This password is not valid!';
       // }
       if (Platform.OS != 'android') {
-        Alert(message);
+        Alert.alert(
+          'Alert',
+          message,
+          [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
+          { cancelable: false }
+        );
       } else {
         ToastAndroid.show(message, ToastAndroid.LONG);
       }
@@ -201,7 +211,12 @@ export const login = (email, password) => {
     console.log('===============parsed=====================');
 
     if (Platform.OS != 'android') {
-      Alert(resData.message);
+      Alert.alert(
+        'Alert',
+        resData.message,
+        [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
+        { cancelable: false }
+      );
     } else {
       ToastAndroid.show(resData.message, ToastAndroid.LONG);
     }
