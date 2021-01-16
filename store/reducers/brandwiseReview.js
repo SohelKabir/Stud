@@ -1,4 +1,8 @@
-const initialState = [{}];
+const initialState = {
+  totalRows: 0,
+  averageReview: '4.2000',
+  searchResult: [],
+};
 
 export default (state = initialState, action) => {
   //console.log(action);

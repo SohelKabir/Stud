@@ -14,6 +14,7 @@ import BrandsReducer from './reducers/brands';
 import BrandwiseReviewsReducer from './reducers/brandwiseReview';
 import brandwiseOfferReducer from './reducers/brandwiseOffer';
 import purchaseHistoryReducer from './reducers/purchases';
+import promoReducer from './reducers/promo';
 
 const rootReducer = combineReducers({
   fashion: FashionReducer,
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
   brandwiseReviews: BrandwiseReviewsReducer,
   brandwiseOffer: brandwiseOfferReducer,
   purchases: purchaseHistoryReducer,
+  promo: promoReducer,
 });
 
 export const store = createStore(

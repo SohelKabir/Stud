@@ -6,42 +6,30 @@ import {
   Text,
   TouchableHighlight,
   View,
-  Dimensions,
   Image,
   Clipboard,
   TouchableOpacity,
   Linking,
+  Dimensions,
 } from 'react-native';
+import colors from '../../constants/colors';
 import { AntDesign } from '@expo/vector-icons';
-import colors from '../constants/colors';
-import { Button } from 'react-native-elements';
-import { setPromo } from '../store/actions/promo';
 import { useDispatch, useSelector } from 'react-redux';
-
+import { Rating, AirbnbRating } from 'react-native-ratings';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const PromoCodeScreen = ({
+const reviewDetailsModal = ({
   isModalVisible,
   handleModal,
   itemId,
   image,
-  offer_details,
-  promoCode,
-  offer_name,
-  brandName,
+  review_body,
+  title,
+  rating,
+  brand,
 }) => {
   const [modalVisible, setModalVisible] = useState(false);
-
-  const dispatch = useDispatch();
-
-  const openLink = async (link) => {
-    // const link = 'http://studbd.com/terms';
-
-    if (await Linking.canOpenURL(link)) {
-      Linking.openURL(link);
-    }
-  };
   return (
     <View style={styles.centeredView}>
       <Modal
@@ -79,7 +67,6 @@ const PromoCodeScreen = ({
                   <AntDesign name='closecircleo' size={24} color='red' />
                 </TouchableHighlight>
               </View>
-
               <View style={{ alignSelf: 'center' }}>
                 <Text
                   style={{
@@ -88,63 +75,40 @@ const PromoCodeScreen = ({
                     fontSize: 22,
                   }}
                 >
-                  {brandName}
+                  {brand}
                 </Text>
+              </View>
+
+              <View style={styles.ratingContainer}>
+                <AirbnbRating
+                  showRating={false}
+                  ratingCount={5}
+                  defaultRating={rating}
+                  // onFinishRating={ratingCompleted}
+                  size={20}
+                  reviews={['Terrible', 'Bad', 'Okay', 'Good', 'Great']}
+                  starContainerStyle={styles.rating}
+                />
               </View>
 
               <View style={styles.divider} />
               {/** This is Divider */}
               <View style={styles.validityTextContainer}>
                 {/**
-                 *  <Text style={styles.validityText}>
-                  Valid From 10/8/2020 to 30/8/2020
-                </Text>
-                 */}
+               *  <Text style={styles.validityText}>
+                Valid From 10/8/2020 to 30/8/2020
+              </Text>
+               */}
               </View>
               <View style={styles.offerTextContainer}>
-                <Text style={styles.offerText}>{offer_name}</Text>
+                <Text style={styles.offerText}>{title}</Text>
               </View>
               <View style={styles.offerDescriptionContainer}>
-                <Text style={styles.offerDescription}>{offer_details}</Text>
+                <Text style={styles.offerDescription}>{review_body}</Text>
               </View>
 
-              <View style={styles.promoCodeContainer}>
-                <View style={styles.promoCodetextBorder}>
-                  <Text style={styles.promoCodetext}>{promoCode}</Text>
-                </View>
-                <TouchableOpacity
-                  onPress={() => Clipboard.setString(promoCode)}
-                >
-                  <View style={styles.promoClipboardContainer}>
-                    <Text style={styles.promoClipboardText}>Copy</Text>
-                  </View>
-                </TouchableOpacity>
-              </View>
-              <View style={{ paddingTop: 5 }}>
-                <Button
-                  title='Refresh Code'
-                  onPress={() => dispatch(setPromo())}
-                ></Button>
-              </View>
-
-              <View style={styles.offerDescriptionContainer2}>
-                <Text style={styles.offerDescription2}>
-                  This code can be used single time.
-                </Text>
-              </View>
               <View style={styles.divider} />
               {/** This is Divider */}
-
-              <View style={styles.termsTextContainer}>
-                <TouchableOpacity
-                  accessibilityRole='link'
-                  onPress={() => openLink('http://studbd.com/terms')}
-                >
-                  <Text style={styles.termsText}>
-                    *Terms and conditions apply
-                  </Text>
-                </TouchableOpacity>
-              </View>
             </View>
           </View>
         </View>
@@ -314,12 +278,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     margin: 10,
   },
+  ratingContainer: {
+    alignItems: 'center',
+  },
   termsText: {
     justifyContent: 'center',
     alignItems: 'center',
     margin: 10,
     color: colors.grey,
   },
+  rating: {
+    fontFamily: 'open-sans',
+    fontSize: 12,
+    marginVertical: 2,
+    alignItems: 'center',
+    justifyContent: 'space-around',
+  },
 });
 
-export default PromoCodeScreen;
+export default reviewDetailsModal;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -11,6 +11,7 @@ import {
   Dimensions,
 } from 'react-native';
 import { Rating, AirbnbRating } from 'react-native-ratings';
+import ReviewDetailsModal from './reviewDetailsModal';
 
 import Colors from '../../constants/colors';
 
@@ -18,6 +19,8 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const BlogItem = (props) => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [itemId, setItemId] = useState('');
   let TouchableCmp = TouchableOpacity;
   if (Platform.OS === 'android' && Platform.Version >= 21) {
     TouchableCmp = TouchableNativeFeedback;
@@ -37,40 +40,62 @@ const BlogItem = (props) => {
         : subString) + '...'
     );
   };
+
+  let handleModal = async (status) => {
+    // setItemId(id);
+    setIsModalVisible(status);
+  };
+
+  console.log('===========blogs=========================');
+  console.log(props);
+  console.log('============blogs========================');
   return (
-    <View style={styles.card}>
-      <View style={styles.touchable}>
-        <TouchableCmp useForeground>
-          <View style={styles.blogContainer}>
-            <View style={styles.textContainer}>
-              <Text style={styles.title}>
-                {truncate(props.title, 25, true)}
-              </Text>
-              <Text style={styles.brandName}>{props.brand}</Text>
-              <View style={styles.ratingContainer}>
-                <AirbnbRating
-                  showRating={false}
-                  ratingCount={5}
-                  defaultRating={props.rating}
-                  onFinishRating={ratingCompleted}
-                  size={20}
-                  reviews={['Terrible', 'Bad', 'Okay', 'Good', 'Great']}
-                  starContainerStyle={styles.rating}
+    <>
+      <View style={styles.card} onPress={() => handleModal(true)}>
+        <View style={styles.touchable}>
+          <TouchableCmp useForeground onPress={() => handleModal(true)}>
+            <View style={styles.blogContainer}>
+              <View style={styles.textContainer}>
+                <Text style={styles.title}>
+                  {truncate(props.title, 25, true)}
+                </Text>
+                <Text style={styles.brandName}>{props.brand}</Text>
+                <View style={styles.ratingContainer}>
+                  <AirbnbRating
+                    showRating={false}
+                    ratingCount={5}
+                    defaultRating={props.rating}
+                    onFinishRating={ratingCompleted}
+                    size={20}
+                    reviews={['Terrible', 'Bad', 'Okay', 'Good', 'Great']}
+                    starContainerStyle={styles.rating}
+                  />
+                </View>
+              </View>
+              <View style={styles.ImageContainer}>
+                <Image
+                  source={{
+                    uri: props.image,
+                  }}
+                  style={styles.image}
                 />
               </View>
             </View>
-            <View style={styles.ImageContainer}>
-              <Image
-                source={{
-                  uri: props.image,
-                }}
-                style={styles.image}
-              />
-            </View>
-          </View>
-        </TouchableCmp>
+          </TouchableCmp>
+        </View>
       </View>
-    </View>
+
+      <ReviewDetailsModal
+        isModalVisible={isModalVisible}
+        handleModal={handleModal}
+        itemId={itemId}
+        image={props.image}
+        review_body={props.review_body}
+        title={props.title}
+        brand={props.brand}
+        rating={props.rating}
+      />
+    </>
   );
 };
 

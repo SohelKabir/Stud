@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Button,
+  Dimensions,
 } from 'react-native';
 
 import ReviewItem from '../components/Stud/ReviewItem';
@@ -15,6 +16,9 @@ import { setBrands } from '../store/actions/brands';
 import { setBrandwiseReviews } from '../store/actions/brandwiseReview';
 import Colors from '../constants/colors';
 import { setBrandwiseOffer } from '../store/actions/brandwiseOffer';
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 const ReviewsScreen = (props) => {
   const dispatch = useDispatch();
@@ -115,6 +119,7 @@ const styles = StyleSheet.create({
   centered: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   FlatListContainer: {
     backgroundColor: '#fff',
+    height: windowHeight,
   },
 });
 

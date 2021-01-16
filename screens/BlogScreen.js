@@ -70,6 +70,10 @@ const BlogScreen = (props) => {
     );
   }
 
+  console.log('====================================');
+  console.log();
+  console.log('====================================');
+
   return (
     <View style={styles.FlatListContainer}>
       <FlatList
@@ -84,6 +88,7 @@ const BlogScreen = (props) => {
             title={itemData.item.review_title}
             brand={itemData.item.sale_brand_name}
             rating={itemData.item.review_rating}
+            review_body={itemData.item.review_body}
             // onViewDetail={() =>
             //   props.navigation.navigate('FashionDetail', {
             //     fashionId: itemData.item.id,

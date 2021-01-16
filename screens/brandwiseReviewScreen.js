@@ -68,9 +68,9 @@ const BrandwiseReview = (props) => {
     { title: 'Reviews', data: brandwiseReviews },
   ];
 
-  // console.log('==============combineData======================');
-  // console.log(combineData);
-  // console.log('===============combineData=====================');
+  console.log('==============combineData======================');
+  console.log(combineData);
+  console.log('===============combineData=====================');
   if (error) {
     return (
       <View style={styles.centered}>
@@ -129,7 +129,7 @@ const BrandwiseReview = (props) => {
   ) {
     return (
       <View style={styles.centered}>
-        <Text>No data found!</Text>
+        <ActivityIndicator size='large' color={Colors.primary} />
       </View>
     );
   }
@@ -153,6 +153,7 @@ const BrandwiseReview = (props) => {
                     brandName={item.offer_brand}
                     title={item.offer_name}
                     offer_details={item.offer_details}
+                    offer_name={item.offer_name}
                   />
                 </View>
               ) : (
@@ -162,6 +163,7 @@ const BrandwiseReview = (props) => {
                   title={item.review_title}
                   brand={item.sale_brand_name}
                   rating={item.review_rating}
+                  review_body={item.review_body}
                 />
               )}
             </>

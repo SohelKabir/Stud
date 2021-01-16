@@ -2,11 +2,7 @@
   "expo": {
     "name": "Stud",
     "slug": "Stud",
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ],
+    "platforms": ["ios", "android", "web"],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/studlogosq.png",
@@ -18,17 +14,25 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "yes"
+      "bundleIdentifier": "com.stud_enterprise.stud",
+      "buildNumber": "1.0.0"
     },
     "description": "",
     "android": {
-      "package": "com.stud.stud",
-      "versionCode": 1
+      "package": "com.stud_enterprise.stud",
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/studlogosq.png",
+        "backgroundColor": "#ffffff"
+      },
+      "permissions": [
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE"
+      ]
     }
   }
 }

@@ -20,6 +20,7 @@ import { setHome } from '../store/actions/home';
 import Colors from '../constants/colors';
 import OfferCard from '../components/Stud/OfferCard';
 import CombineCard from '../components/Stud/CombineCard';
+import SlimSlider from '../components/Stud/slimSlider';
 
 const AllScreen = (props) => {
   const dispatch = useDispatch();
@@ -111,7 +112,13 @@ const AllScreen = (props) => {
       <View style={styles.Container}>
         <FlatList
           ListHeaderComponent={
-            <SlideShow images={homeSlidersImages} sliderBoxHeight={200} />
+            <>
+              <View style={{ marginTop: -12 }}>
+                <SlimSlider />
+              </View>
+
+              <SlideShow images={homeSlidersImages} sliderBoxHeight={200} />
+            </>
           }
           columnWrapperStyle={{
             flexWrap: 'wrap',

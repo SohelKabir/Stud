@@ -107,6 +107,7 @@ const Profile = () => {
           // style={styles}
           value={name}
           onChangeText={(value) => setName(value)}
+          disabled
         />
         <View style={styles.fieldName}>
           <Text>Email</Text>
@@ -117,6 +118,7 @@ const Profile = () => {
           // style={styles}
           value={email}
           onChangeText={(value) => setEmail(value)}
+          disabled
         />
         <View style={styles.fieldName}>
           <Text>Phone</Text>
@@ -128,8 +130,12 @@ const Profile = () => {
           // style={styles}
           onChangeText={(value) => setPhone(value)}
           keyboardType='number-pad'
+          disabled
         />
-        <View style={styles.fieldName}>
+        {/**
+           * 
+           * 
+           *  <View style={styles.fieldName}>
           <Text>Password</Text>
         </View>
         <Input
@@ -187,6 +193,10 @@ const Profile = () => {
             raised
           />
         </View>
+      
+           * 
+           * 
+           */}
       </View>
     </ScrollView>
   );

@@ -119,6 +119,7 @@ const HealthScreen = (props) => {
                 brandName={itemData.item.offer_brand}
                 title={itemData.item.offer_name}
                 offer_details={itemData.item.offer_details}
+                offer_name={itemData.item.offer_name}
               />
             </>
           )}

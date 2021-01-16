@@ -9,14 +9,17 @@ import {
   TouchableNativeFeedback,
   Platform,
 } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Colors from '../../constants/colors';
 import PromoCodeModal from '../../screens/PromoCodeScreen';
+import { setPromo } from '../../store/actions/promo';
 
 const FashionItem = (props) => {
+  const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => !!state.auth.token);
   const userData = useSelector((state) => state.auth.user);
+  const promoCode = useSelector((state) => state.promo);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [itemId, setItemId] = useState('');
@@ -25,10 +28,11 @@ const FashionItem = (props) => {
     TouchableCmp = TouchableNativeFeedback;
   }
 
-  let handleModal = (status, id) => {
+  let handleModal = async (status, id) => {
     setItemId(id);
     setIsModalVisible(true);
     setIsModalVisible(status);
+    await dispatch(setPromo());
   };
 
   return (
@@ -40,7 +44,9 @@ const FashionItem = (props) => {
           itemId={itemId}
           image={props.image}
           offer_details={props.offer_details}
-          promoCode={isLoggedIn ? userData.promocode : 'Login to get code'}
+          promoCode={isLoggedIn ? promoCode : 'Login to get code'}
+          offer_name={props.offer_name}
+          brandName={props.brandName}
         />
       </View>
 

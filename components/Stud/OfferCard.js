@@ -12,7 +12,8 @@ import {
 } from 'react-native';
 import { SliderBox } from 'react-native-image-slider-box';
 import PromoCodeModal from '../../screens/PromoCodeScreen';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setPromo } from '../../store/actions/promo';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -23,6 +24,9 @@ const OfferCard = (props) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [itemId, setItemId] = useState('');
 
+  const dispatch = useDispatch();
+  const promoCode = useSelector((state) => state.promo);
+
   const isLoggedIn = useSelector((state) => !!state.auth.token);
   const userData = useSelector((state) => state.auth.user);
 
@@ -31,10 +35,11 @@ const OfferCard = (props) => {
     TouchableCmp = TouchableNativeFeedback;
   }
 
-  let handleModal = (status, id) => {
+  let handleModal = async (status, id) => {
     setItemId(id);
     setIsModalVisible(true);
     setIsModalVisible(status);
+    await dispatch(setPromo());
   };
   return (
     <>
@@ -47,7 +52,8 @@ const OfferCard = (props) => {
           brandName={props.brandName}
           title={props.title}
           offer_details={props.offer_details}
-          promoCode={isLoggedIn ? userData.promocode : 'Login to get code'}
+          offer_name={props.offer_name}
+          promoCode={isLoggedIn ? promoCode : 'Login to get code'}
         />
       </View>
       <View style={styles.card}>

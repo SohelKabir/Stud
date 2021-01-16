@@ -285,9 +285,9 @@ const purchaseHistoryStackNavigatior = createStackNavigator(
 const loggedInDrawer = {
   Home: StudNavigator,
   Purchases: purchaseHistoryStackNavigatior,
-  Setting: {
-    screen: settingStackNavigatior,
-  },
+  // Setting: {
+  //   screen: settingStackNavigatior,
+  // },
 
   Profile: profileStackNavigatior,
   About: aboutStackNavigatior,
