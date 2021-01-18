@@ -146,6 +146,6 @@ export default memo(AllScreen);
 
 const styles = StyleSheet.create({
   Container: {
-    backgroundColor: 'white',
+    backgroundColor: 'black',
   },
 });
