@@ -113,7 +113,7 @@ const AllScreen = (props) => {
         <FlatList
           ListHeaderComponent={
             <>
-              <View style={{ marginTop: -12 }}>
+              <View style={{ marginTop: - 15}}>
                 <SlimSlider />
               </View>
 

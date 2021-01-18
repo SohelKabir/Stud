@@ -36,9 +36,7 @@ const slimSlider = () => {
     }, 5000);
   }, []);
 
-  //   if(slimSlider.length === 0) {
-  //       return
-  //   }
+ 
   return (
     <View
       style={{
