@@ -10,6 +10,8 @@ import {
   Image,
   Platform,
   ToastAndroid,
+  Text,
+  Dimensions,
 } from 'react-native';
 //import Snackbar from 'react-native-snackbar';
 import * as ImagePicker from 'expo-image-picker';
@@ -20,6 +22,10 @@ import Input from '../../components/UI/Input';
 import Card from '../../components/UI/Card';
 import Colors from '../../constants/colors';
 import * as authActions from '../../store/actions/auth';
+import Dropdown from '../../components/UI/Dropdown';
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
 
@@ -54,6 +60,7 @@ const AuthScreen = (props) => {
 
   const [imageProfilePic, setImageProfilePic] = useState(null);
   const [imageSIDPic, setImageSIDPic] = useState(null);
+  const [university, setUni] = useState('Select University');
 
   useEffect(() => {
     (async () => {
@@ -175,6 +182,7 @@ const AuthScreen = (props) => {
           formState.inputValues.email,
           formState.inputValues.phone,
           formState.inputValues.password,
+          university,
           user_created_at,
           imageProfilePic,
           imageSIDPic
@@ -249,6 +257,7 @@ const AuthScreen = (props) => {
                 initialValue=''
               />
             ) : null}
+
             <Input
               id='email'
               label='E-Mail'
@@ -285,8 +294,15 @@ const AuthScreen = (props) => {
               onInputChange={inputChangeHandler}
               initialValue=''
             />
+
             {isSignup ? (
               <>
+                <View style={{ paddingVertical: 15 }}>
+                  <Text style={{ fontFamily: 'open-sans-bold' }}>
+                    Select University Name
+                  </Text>
+                  <Dropdown university={university} setUni={setUni} />
+                </View>
                 <View
                   style={{
                     flex: 1,
@@ -301,10 +317,12 @@ const AuthScreen = (props) => {
                       style={{ width: 200, height: 200 }}
                     />
                   )}
-                  <Button
-                    title='Upload profile picture'
-                    onPress={pickImageProfilePic}
-                  />
+                  <View style={{ width: windowWidth, paddingVertical: 10 }}>
+                    <Button
+                      title='Upload profile picture'
+                      onPress={pickImageProfilePic}
+                    />
+                  </View>
                 </View>
                 <View
                   style={{
@@ -319,10 +337,12 @@ const AuthScreen = (props) => {
                       style={{ width: 200, height: 200 }}
                     />
                   )}
-                  <Button
-                    title='Upload Student ID picture'
-                    onPress={pickImageSIDPic}
-                  />
+                  <View style={{ width: windowWidth, paddingVertical: 10 }}>
+                    <Button
+                      title='Upload Student ID picture'
+                      onPress={pickImageSIDPic}
+                    />
+                  </View>
                 </View>
               </>
             ) : null}

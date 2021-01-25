@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Provider } from 'react-redux';
-import { AppLoading } from 'expo';
+import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
 
 import NavigationContainer from './navigation/NavigationContainer';
 import { store } from './store/configStore';
-import { YellowBox } from 'react-native';
+//import { LogBox } from 'react-native';
 import _ from 'lodash';
 
 // const rootReducer = combineReducers({
@@ -33,7 +33,8 @@ const fetchFont = () => {
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
 
-  YellowBox.ignoreWarnings(['Setting a timer']);
+  // LogBox.ignoreLogs();
+
   const _console = _.clone(console);
   console.warn = (message) => {
     if (message.indexOf('Setting a timer') <= -1) {
@@ -48,6 +49,7 @@ export default function App() {
         onFinish={() => {
           setFontLoaded(true);
         }}
+        onError={console.warn}
       />
     );
   }

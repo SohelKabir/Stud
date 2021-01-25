@@ -3,11 +3,11 @@
     "name": "Stud",
     "slug": "Stud",
     "platforms": ["ios", "android", "web"],
-    "version": "1.0.0",
+    "version": "1.0.2",
     "orientation": "portrait",
-    "icon": "./assets/studlogosq.png",
+    "icon": "./assets/stud512.png",
     "splash": {
-      "image": "./assets/studlogo.png",
+      "image": "./assets/stud512.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -17,15 +17,15 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.stud_enterprise.stud",
+      "bundleIdentifier": "com.studenterprise.stud",
       "buildNumber": "1.0.0"
     },
     "description": "",
     "android": {
-      "package": "com.stud_enterprise.stud",
-      "versionCode": 1,
+      "package": "com.studenterprise.stud",
+      "versionCode": 3,
       "adaptiveIcon": {
-        "foregroundImage": "./assets/studlogosq.png",
+        "foregroundImage": "./assets/stud512.png",
         "backgroundColor": "#ffffff"
       },
       "permissions": [

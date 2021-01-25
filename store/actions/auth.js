@@ -15,6 +15,7 @@ export const signup = (
   email,
   phone,
   password,
+  university,
   user_created_at,
   imageProfilePic,
   imageSIDPic
@@ -24,6 +25,7 @@ export const signup = (
   formData.append('email', email);
   formData.append('phone', phone);
   formData.append('password', password);
+  formData.append('university', university);
   formData.append('user_created_at', user_created_at);
 
   // // formData.append('profile_pic', imageProfilePic);

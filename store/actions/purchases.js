@@ -10,12 +10,20 @@ export const setPurchases = () => {
         method: 'GET', // *GET, POST, PUT, DELETE, etc.
         headers: {
           Token: token,
-          //'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
           // 'Content-Type': 'application/x-www-form-urlencoded',
         },
       });
 
+      console.log('===========response=========================');
+      console.log(response);
+      console.log('==========response==========================');
+
       const resData = await response.json();
+
+      console.log('===========resData=========================');
+      console.log(resData);
+      console.log('==========resData==========================');
 
       dispatch({
         type: 'SET_PURCHASES',

@@ -4,19 +4,40 @@ export const setPromo = () => {
     console.log('=============tok=======================');
     console.log(state.auth.token);
     console.log('==============tok======================');
-    const token = state.auth.token;
+    let token = state.auth.token;
+
+    let formData = new FormData();
+    formData.append('Token', token);
     try {
       const response = await fetch(
-        'http://studbd.com/api/appGeneratePromocode',
+        'http://studbd.com/api/appPostGeneratePromocode',
         {
-          method: 'GET', // *GET, POST, PUT, DELETE, etc.
-          headers: {
-            Token: token,
-            //'Content-Type': 'application/json',
-            // Accept: 'application/json',
-          },
+          method: 'POST', // *GET, POST, PUT, DELETE, etc.
+          // headers: {
+          //   Token: token,
+          //   // 'Content-Type': 'application/json',
+          //   // Accept: 'application/json',
+          // },
+          body: formData,
         }
       );
+
+      // axios
+      //   .get('http://studbd.com/api/appGeneratePromocode', {
+      //     headers: {
+      //       Token: token,
+      //     },
+      //   })
+      //   .then((res) => {
+      //     console.log(res.data);
+      //   })
+      //   .catch((error) => {
+      //     console.error(error);
+      //   });
+
+      console.log('=============promoRes=======================');
+      console.log(response);
+      console.log('========promoRes============================');
 
       const resData = await response.json();
 
