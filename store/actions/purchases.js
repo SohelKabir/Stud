@@ -5,14 +5,18 @@ export const setPurchases = () => {
     console.log(state.auth.token);
     console.log('==============tok======================');
     const token = state.auth.token;
+
+    let formData = new FormData();
+    formData.append('Token', token);
     try {
       const response = await fetch('http://studbd.com/api/appPurchaseHistory', {
-        method: 'GET', // *GET, POST, PUT, DELETE, etc.
-        headers: {
-          Token: token,
-          'Content-Type': 'application/json',
-          // 'Content-Type': 'application/x-www-form-urlencoded',
-        },
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        // headers: {
+        //   Token: token,
+        //   'Content-Type': 'application/json',
+        //   // 'Content-Type': 'application/x-www-form-urlencoded',
+        // },
+        body: formData,
       });
 
       console.log('===========response=========================');
