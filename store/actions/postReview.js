@@ -46,14 +46,16 @@ export const postReview = (rating, title, description, sale_id, image) => {
   console.log(formData);
   console.log('====================================');
   return async (dispatch, getState) => {
-    const Token = getState().auth.token;
+    const token = getState().auth.token;
+
+    formData.append('Token', token);
     const response = await fetch('http://studbd.com/api/appSaveReview', {
       method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'multipart/form-data;',
-        Token: Token,
-      },
+      // headers: {
+      //   Accept: 'application/json',
+      //   'Content-Type': 'multipart/form-data;',
+      //   Token: Token,
+      // },
       body: formData,
     });
 
