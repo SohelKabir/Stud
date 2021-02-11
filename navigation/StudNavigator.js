@@ -38,6 +38,7 @@ import CustomDrawerComponent from '../screens/drawer/customDrawerComponent';
 import BrandwiseReviewScreen from '../screens/brandwiseReviewScreen';
 import PurchaseHistoryScreen from '../screens/PurchaseHistoryScreen';
 import { store } from '../store/configStore';
+import SearchAllScreen from '../screens/SearchAll';
 
 const state = store.getState();
 const token = state.auth.token;
@@ -48,6 +49,17 @@ const headerNavButton = (navData) => (
       iconName={Platform.OS === 'android' ? 'md-menu' : 'ios-menu'}
       onPress={() => {
         navData.navigation.toggleDrawer();
+      }}
+    />
+  </HeaderButtons>
+);
+const headerSearchButton = (navData) => (
+  <HeaderButtons HeaderButtonComponent={HeaderButton}>
+    <Item
+      title='Search'
+      iconName={Platform.OS === 'android' ? 'search-sharp' : 'ios-search'}
+      onPress={() => {
+        navData.navigation.navigate('SearchAll');
       }}
     />
   </HeaderButtons>
@@ -125,6 +137,7 @@ const StudNavigator = createStackNavigator(
           />
         ),
         headerLeft: () => headerNavButton(navData),
+        headerRight: () => headerSearchButton(navData),
       }),
     },
     FashionDetail: {
@@ -143,6 +156,12 @@ const StudNavigator = createStackNavigator(
       screen: BrandwiseReviewScreen,
       navigationOptions: ({ navigation }) => {
         return { headerTitle: navigation.getParam('brandName') };
+      },
+    },
+    SearchAll: {
+      screen: SearchAllScreen,
+      navigationOptions: ({ navigation }) => {
+        return { headerTitle: 'Search Brands' };
       },
     },
   },

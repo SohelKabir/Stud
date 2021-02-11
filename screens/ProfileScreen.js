@@ -17,8 +17,18 @@ import * as ImagePicker from 'expo-image-picker';
 const Profile = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
-  const userInfo = state.auth.user;
-  const user_id = userInfo.user_id;
+  const token = state.auth.token;
+
+  let userInfo = {
+    fullname: '',
+    email: '',
+    phone_number: '',
+  };
+  let user_id;
+  if (token !== null) {
+    userInfo = state.auth.user;
+    user_id = userInfo.user_id;
+  }
 
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState(userInfo.fullname);
@@ -34,7 +44,7 @@ const Profile = () => {
       if (Platform.OS !== 'web') {
         const {
           status,
-        } = await ImagePicker.requestCameraRollPermissionsAsync();
+        } = await ImagePicker.requestMediaLibraryPermissionsAsync();
         if (status !== 'granted') {
           Alert.alert(
             'Alert',
@@ -94,6 +104,26 @@ const Profile = () => {
     );
     setLoading(false);
   };
+
+  if (token === null) {
+    return (
+      <View
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Text
+          style={{
+            color: 'red',
+          }}
+        >
+          An Error Occured!
+        </Text>
+      </View>
+    );
+  }
 
   return (
     <ScrollView>

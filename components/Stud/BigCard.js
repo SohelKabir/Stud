@@ -10,6 +10,7 @@ import {
   Platform,
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
+import { truncate } from 'lodash';
 
 import Colors from '../../constants/colors';
 import PromoCodeModal from '../../screens/PromoCodeScreen';
@@ -58,7 +59,13 @@ const FashionItem = (props) => {
                 <Image style={styles.image} source={{ uri: props.image }} />
               </View>
               <View style={styles.details}>
-                <Text style={styles.title}>{props.title}</Text>
+                <Text style={styles.title}>
+                  {truncate(props.title, {
+                    length: 35,
+                    separator: ' ',
+                    omission: '...',
+                  })}
+                </Text>
 
                 <Text style={styles.brandName}>{props.brandName}</Text>
               </View>
@@ -114,7 +121,7 @@ const styles = StyleSheet.create({
   details: {
     alignItems: 'center',
     height: '15%',
-    padding: 10,
+    padding: 5,
   },
   title: {
     fontFamily: 'open-sans-bold',

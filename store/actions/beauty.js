@@ -2,7 +2,7 @@ export const setBeauty = () => {
   return async (dispatch) => {
     try {
       const response = await fetch(
-        'http://studbd.com/api/category_offers/beauty'
+        'https://jsonplaceholder.typicode.com/todos'
       );
       // console.log(response);
 

@@ -135,7 +135,11 @@ const AllScreen = (props) => {
               <CombineCard itemData={itemData} />
             </>
           )}
-          ListFooterComponent={<></>}
+          ListFooterComponent={
+            <>
+              <View style={{ padding: 50 }}></View>
+            </>
+          }
         />
       </View>
     </>
